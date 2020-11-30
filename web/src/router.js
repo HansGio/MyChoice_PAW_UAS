@@ -13,47 +13,46 @@ const router = new VueRouter({
 	mode: "history",
 	routes: [
 		{
-			path: "/",
-			name: "admin",
-			component: importComponent("admin/DashboardLayout"),
+			path: "/admin",
+			name: "Admin",
+			redirect: { name: "Root" },
+			component: importComponent("Admin/DashboardLayout"),
 			children: [
 				{
-					path: "/",
+					path: "dashboard",
 					name: "Root",
 					meta: { title: "Dashboard" },
-					component: importComponent("admin/Dashboard"),
+					component: importComponent("Admin/Dashboard"),
 				},
 				{
-					path: "/daftarProduk",
+					path: "daftar-produk",
 					name: "Daftar Produk",
 					meta: { title: "Daftar Produk" },
-					component: importComponent("admin/daftarProduk"),
+					component: importComponent("Admin/DaftarProduk"),
 				},
 				{
-					path: "/tambahProduk",
+					path: "tambah-produk",
 					name: "Tambah Produk",
 					meta: { title: "Tambah Produk" },
-					component: importComponent("admin/tambahProduk"),
-				},{
-					path: "/daftarPesanan",
+					component: importComponent("Admin/TambahProduk"),
+				},
+				{
+					path: "daftar-pesanan",
 					name: "Daftar Pesanan",
 					meta: { title: "Daftar Pesanan" },
-					component: importComponent("admin/daftarPesanan"),
-				},{
-					path: "/laporan",
+					component: importComponent("Admin/DaftarPesanan"),
+				},
+				{
+					path: "laporan",
 					name: "Laporan",
 					meta: { title: "Laporan" },
-					component: importComponent("admin/laporan"),
-				},{
-					path: "/voucher",
+					component: importComponent("Admin/Laporan"),
+				},
+				{
+					path: "voucher",
 					name: "Voucher",
 					meta: { title: "Voucher" },
-					component: importComponent("admin/voucher"),
-				},{
-					path: "/keluar",
-					name: "Keluar",
-					meta: { title: "Keluar" },
-					component: importComponent("admin/keluar"),
+					component: importComponent("Admin/Voucher"),
 				},
 			],
 		},
