@@ -3,45 +3,11 @@
         <div></div>
 
         <v-card>
-            <v-card-title>
+            <v-tabs>
                 <v-row class="mb-6" no-gutters>
-                    <v-col md="5">
-                        <template cols="12" sm="6" md="8">
-                            <v-tabs align-with-title>
-                                <v-tab> Semua Produk </v-tab>
-                                <v-tab> Aktif </v-tab>
-                                <v-tab> Non Aktif </v-tab>
-                            </v-tabs>
-                            <v-tab-item v-for="n in 3" :key="n">
-                                <v-container fluid>
-                                    <v-row>
-                                        <v-col
-                                            v-for="i in 6"
-                                            :key="i"
-                                            cols="12"
-                                            md="4"
-                                        >
-                                            <v-img
-                                                :src="
-                                                    `https://picsum.photos/500/300?image=${i *
-                                                        n *
-                                                        5 +
-                                                        10}`
-                                                "
-                                                :lazy-src="
-                                                    `https://picsum.photos/10/6?image=${i *
-                                                        n *
-                                                        5 +
-                                                        10}`
-                                                "
-                                                aspect-ratio="1"
-                                            ></v-img>
-                                        </v-col>
-                                    </v-row>
-                                </v-container>
-                            </v-tab-item>
-                        </template>
-                    </v-col>
+                    <v-tab> Semua Produk </v-tab>
+                    <v-tab> Aktif </v-tab>
+                    <v-tab> Non Aktif </v-tab>
                     <v-col md="3" offset-md="4">
                         <v-text-field
                             v-model="search"
@@ -52,51 +18,208 @@
                         ></v-text-field>
                     </v-col>
                 </v-row>
-                <div class="">
-                    <v-col>
-                        <v-spacer></v-spacer>
-                    </v-col>
-                </div>
-            </v-card-title>
-            <v-data-table :headers="headers" :items="desserts" :search="search">
-                <template v-slot:[`item.name`]="{ item }">
-                    <div class="p-2 d-flex align-center">
-                        <v-img
-                            :src="
-                                `https://images.unsplash.com/photo-1606654951863-70346cd12201?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1268&q=80`
-                            "
-                            :alt="item.name"
-                            max-height="100px"
-                            max-width="100px"
-                        ></v-img>
-                        <div class="ml-3">
-                            {{ item.name }}
-                            <v-spacer></v-spacer>
-                            {{ item.size }}
-                        </div>
-                    </div>
-                </template>
+                <v-tab-item>
+                    <v-container fluid>
+                        <v-row>
+                            <v-col>
+                                <v-data-table
+                                    :headers="headers"
+                                    :items="desserts"
+                                    :search="search"
+                                >
+                                    <template
+                                        v-slot:[`item.name`]="{
+                                            item,
+                                        }"
+                                    >
+                                        <div class="p-2 d-flex align-center">
+                                            <v-img
+                                                :src="
+                                                    `https://images.unsplash.com/photo-1606654951863-70346cd12201?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1268&q=80`
+                                                "
+                                                :alt="item.name"
+                                                max-height="100px"
+                                                max-width="100px"
+                                            ></v-img>
+                                            <div class="ml-3">
+                                                {{ item.name }}
+                                                <v-spacer></v-spacer>
+                                                {{ item.size }}
+                                            </div>
+                                        </div>
+                                    </template>
 
-                <template v-slot:item.status="{ item }">
-                    <v-chip :color="getColor(item.status)" dark>
-                        {{ item.status }}
-                    </v-chip>
-                </template>
+                                    <template
+                                        v-slot:item.status="{
+                                            item,
+                                        }"
+                                    >
+                                        <v-chip
+                                            :color="getColor(item.status)"
+                                            dark
+                                        >
+                                            {{ item.status }}
+                                        </v-chip>
+                                    </template>
 
-                <template v-slot:item.pengaturan>
-                    <v-icon large color="darken-2" @click="dialog = true">
-                        mdi-trash-can-outline
-                    </v-icon>
+                                    <template v-slot:item.pengaturan>
+                                        <v-icon
+                                            large
+                                            color="darken-2"
+                                            @click="dialog = true"
+                                        >
+                                            mdi-trash-can-outline
+                                        </v-icon>
 
-                    <v-icon
-                        large
-                        color="darken-2"
-                        @click="dialogConfirm = true"
-                    >
-                        mdi-eyedropper-variant
-                    </v-icon>
-                </template>
-            </v-data-table>
+                                        <v-icon
+                                            large
+                                            color="darken-2"
+                                            @click="checkDialog = true"
+                                        >
+                                            mdi-eyedropper-variant
+                                        </v-icon>
+                                    </template>
+                                </v-data-table>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-tab-item>
+
+                <v-tab-item>
+                    <v-container fluid>
+                        <v-row>
+                            <v-col>
+                                <v-data-table
+                                    :headers="headers"
+                                    :items="desserts"
+                                    :search="`aktif`"
+                                >
+                                    <template
+                                        v-slot:[`item.name`]="{
+                                            item,
+                                        }"
+                                    >
+                                        <div class="p-2 d-flex align-center">
+                                            <v-img
+                                                :src="
+                                                    `https://images.unsplash.com/photo-1606654951863-70346cd12201?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1268&q=80`
+                                                "
+                                                :alt="item.name"
+                                                max-height="100px"
+                                                max-width="100px"
+                                            ></v-img>
+                                            <div class="ml-3">
+                                                {{ item.name }}
+                                                <v-spacer></v-spacer>
+                                                {{ item.size }}
+                                            </div>
+                                        </div>
+                                    </template>
+
+                                    <template
+                                        v-slot:item.status="{
+                                            item,
+                                        }"
+                                    >
+                                        <v-chip
+                                            :color="getColor(item.status)"
+                                            dark
+                                        >
+                                            {{ item.status }}
+                                        </v-chip>
+                                    </template>
+
+                                    <template v-slot:item.pengaturan>
+                                        <v-icon
+                                            large
+                                            color="darken-2"
+                                            @click="dialog = true"
+                                        >
+                                            mdi-trash-can-outline
+                                        </v-icon>
+
+                                        <v-icon
+                                            large
+                                            color="darken-2"
+                                            @click="checkDialog = true"
+                                        >
+                                            mdi-eyedropper-variant
+                                        </v-icon>
+                                    </template>
+                                </v-data-table>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-tab-item>
+
+                <v-tab-item>
+                    <v-container fluid>
+                        <v-row>
+                            <v-col>
+                                <v-data-table
+                                    :headers="headers"
+                                    :items="desserts"
+                                    :search="`non aktif`"
+                                >
+                                    <template
+                                        v-slot:[`item.name`]="{
+                                            item,
+                                        }"
+                                    >
+                                        <div class="p-2 d-flex align-center">
+                                            <v-img
+                                                :src="
+                                                    `https://images.unsplash.com/photo-1606654951863-70346cd12201?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1268&q=80`
+                                                "
+                                                :alt="item.name"
+                                                max-height="100px"
+                                                max-width="100px"
+                                            ></v-img>
+                                            <div class="ml-3">
+                                                {{ item.name }}
+                                                <v-spacer></v-spacer>
+                                                {{ item.size }}
+                                            </div>
+                                        </div>
+                                    </template>
+
+                                    <template
+                                        v-slot:item.status="{
+                                            item,
+                                        }"
+                                    >
+                                        <v-chip
+                                            :color="getColor(item.status)"
+                                            dark
+                                        >
+                                            {{ item.status }}
+                                        </v-chip>
+                                    </template>
+
+                                    <template v-slot:item.pengaturan>
+                                        <v-icon
+                                            large
+                                            color="darken-2"
+                                            @click="dialog = true"
+                                        >
+                                            mdi-trash-can-outline
+                                        </v-icon>
+
+                                        <v-icon
+                                            large
+                                            color="darken-2"
+                                            @click="checkDialog = true"
+                                        >
+                                            mdi-eyedropper-variant
+                                        </v-icon>
+                                    </template>
+                                </v-data-table>
+                            </v-col>
+                        </v-row>
+                    </v-container>
+                </v-tab-item>
+            </v-tabs>
+            <v-col md="3" offset-md="4"> </v-col>
         </v-card>
 
         <v-dialog v-model="dialog" persistent max-width="600px">
@@ -184,6 +307,7 @@ export default {
             error_message: "",
             color: "",
             search: null,
+            aktifItem: "aktif",
             dialog: false,
             dialogConfirm: false,
 
@@ -197,15 +321,6 @@ export default {
             },
             deleteId: "",
             editId: "",
-
-            informasiProduk: [
-                {
-                    gambar: null,
-                    nama_produk: null,
-                    size: null,
-                },
-            ],
-
             headers: [
                 {
                     text: "Informasi Produk",
@@ -223,12 +338,12 @@ export default {
                     name: "ayam",
                     image: "aa",
                     size: "s,m,l",
-                    harga: 100000,
-                    stock: 10,
+                    harga: 200000,
+                    stock: 20,
                     status: "aktif",
                 },
                 {
-                    name: "ayam",
+                    name: "babi",
                     image: "aa",
                     size: "s,m,l",
                     harga: 100000,
@@ -236,31 +351,7 @@ export default {
                     status: "non aktif",
                 },
                 {
-                    name: "ayam",
-                    image: "aa",
-                    size: "s,m,l",
-                    harga: 100000,
-                    stock: 10,
-                    status: "non aktif",
-                },
-                {
-                    name: "ayam",
-                    image: "aa",
-                    size: "s,m,l",
-                    harga: 100000,
-                    stock: 10,
-                    status: "non aktif",
-                },
-                {
-                    name: "ayam",
-                    image: "aa",
-                    size: "s,m,l",
-                    harga: 100000,
-                    stock: 10,
-                    status: "non aktif",
-                },
-                {
-                    name: "ayam",
+                    name: "kaki babi",
                     image: "aa",
                     size: "s,m,l",
                     harga: 100000,
@@ -271,123 +362,6 @@ export default {
         };
     },
     methods: {
-        setForm() {
-            if (this.inputType === "Tambah") {
-                this.save();
-            } else {
-                this.update();
-            }
-        },
-        //read data product
-        readData() {
-            var url = this.$api + "/product";
-            this.$http
-                .get(url, {
-                    headers: {
-                        Authorization:
-                            "Bearer " + localStorage.getItem("token"),
-                    },
-                })
-                .then((response) => {
-                    this.products = response.data.data;
-                });
-        },
-        //simpan data produk
-        save() {
-            this.product.append("nama_produk", this.form.nama_produk);
-            this.product.append("satuan", this.form.satuan);
-            this.product.append("harga_jual", this.form.harga_jual);
-            this.product.append("stok", this.form.stok);
-
-            var url = this.$api + "/product/";
-            this.load = true;
-            this.$http
-                .post(url, this.product, {
-                    headers: {
-                        Authorization:
-                            "Bearer " + localStorage.getItem("token"),
-                    },
-                })
-                .then((response) => {
-                    this.error_message = response.data.message;
-                    this.color = "green";
-                    this.snackbar = true;
-                    this.load = false;
-                    this.close();
-                    this.readData(); //mengambil data
-                    this.resetForm();
-                })
-                .catch((error) => {
-                    this.error_message = error.response.data.message;
-                    this.color = "red";
-                    this.snackbar = true;
-                    this.load = false;
-                });
-        },
-        //ubah data produk
-        update() {
-            let newData = {
-                nama_produk: this.form.nama_produk,
-                satuan: this.form.satuan,
-                harga_jual: this.form.harga_jual,
-                stok: this.form.stok,
-            };
-            var url = this.$api + "/product/" + this.editId;
-            this.load = true;
-            this.$http
-                .put(url, newData, {
-                    headers: {
-                        Authorization:
-                            "Bearer " + localStorage.getItem("token"),
-                    },
-                })
-                .then((response) => {
-                    this.error_message = response.data.message;
-                    this.color = "green";
-                    this.snackbar = true;
-                    this.load = false;
-                    this.close();
-                    this.readData(); //mengambil data
-                    this.resetForm();
-                    this.inputType = "Tambah";
-                })
-                .catch((error) => {
-                    this.error_message = error.response.data.message;
-                    this.color = "red";
-                    this.snackbar = true;
-                    this.load = false;
-                });
-        },
-        //hapus data produk
-        deleteData() {
-            //mengahapus data
-            var url = this.$api + "/product/" + this.deleteId;
-            //data dihapus berdasarkan id
-            this.$http
-                .delete(url, {
-                    headers: {
-                        Authorization:
-                            "Bearer " + localStorage.getItem("token"),
-                    },
-                })
-                .then((response) => {
-                    this.error_message = response.data.message;
-                    this.color = "green";
-                    this.snackbar = true;
-                    this.load = false;
-                    this.close();
-                    this.readData(); //mengambil data
-                    this.resetForm();
-                    this.inputType = "Tambah";
-                })
-                .catch((error) => {
-                    this.error_message = error.response.data.message;
-                    this.color = "red";
-                    this.snackbar = true;
-                    this.load = false;
-                });
-            this.dialogConfirm = false;
-        },
         editHandler(item) {
             this.inputType = "Ubah";
             this.editId = item.id;
