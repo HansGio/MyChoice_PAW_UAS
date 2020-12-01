@@ -74,12 +74,12 @@ export default {
 			logouts: "LogOut Success",
 
 			items: [
-				{ title: "Dashboard", to: "dashboard" },
-				{ title: "Daftar Produk", to: "daftar-produk" },
-				{ title: "Tambah Produk", to: "tambah-produk" },
-				{ title: "Daftar Pesanan", to: "daftar-pesanan" },
-				{ title: "Laporan", to: "laporan" },
-				{ title: "Voucher", to: "voucher" },
+				{ title: "Dashboard", to: "/dashboardAdmin"},
+				{ title: "Daftar Produk", to: "/daftar-produk" },
+				{ title: "Tambah Produk", to: "/tambah-produk" },
+				{ title: "Daftar Pesanan", to: "/daftar-pesanan" },
+				{ title: "Laporan", to: "/laporan" },
+				{ title: "Voucher", to: "/voucher" },
 			],
 		};
 	},

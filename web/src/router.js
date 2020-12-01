@@ -18,37 +18,37 @@ const router = new VueRouter({
 			component: importComponent("admin/DashboardLayout"),
 			children: [
 				{
-					path: "dashboard",
-					name: "Root",
+					path: "/dashboardAdmin",
+					name: "Dashboard Admin",
 					meta: { title: "Dashboard" },
 					component: importComponent("admin/Dashboard"),
 				},
 				{
-					path: "daftar-produk",
+					path: "/daftar-produk",
 					name: "Daftar Produk",
 					meta: { title: "Daftar Produk" },
 					component: importComponent("admin/daftarProduk"),
 				},
 				{
-					path: "tambah-produk",
+					path: "/tambah-produk",
 					name: "Tambah Produk",
 					meta: { title: "Tambah Produk" },
 					component: importComponent("admin/tambahProduk"),
 				},
 				{
-					path: "daftar-pesanan",
+					path: "/daftar-pesanan",
 					name: "Daftar Pesanan",
 					meta: { title: "Daftar Pesanan" },
 					component: importComponent("admin/daftarPesanan"),
 				},
 				{
-					path: "laporan",
+					path: "/laporan",
 					name: "Laporan",
 					meta: { title: "Laporan" },
 					component: importComponent("admin/laporan"),
 				},
 				{
-					path: "voucher",
+					path: "/voucher",
 					name: "Voucher",
 					meta: { title: "Voucher" },
 					component: importComponent("admin/Voucher"),
@@ -62,67 +62,67 @@ const router = new VueRouter({
 			component: importComponent("user/DashboardLayoutUser"),
 			children: [
 				{
-					path: "dashboard",
+					path: "/dashboardUser",
 					name: "Dashboard",
 					meta: {title: "Dashboard"},
 					component: importComponent("user/DashboardUser")
 				},
 				{
-					path: "about",
+					path: "/about",
 					name: "About",
 					meta: {title : "About Us"},
 					component: importComponent("user/About")
 				},
 				{
-					path: "checkout",
+					path: "/checkout",
 					name: "Check Out",
 					meta: {title : "Check Out"},
 					component: importComponent("user/CheckOutUser")
 				},
 				{
-					path: "contactus",
+					path: "/contactus",
 					name: "Contact Us",
 					meta: {title : "Contact Us"},
 					component: importComponent("user/ContactUs")
 				},
 				{
-					path: "itemdetails",
+					path: "/itemdetails",
 					name: "Item Details",
 					meta: {title: "Item Details"},
 					component: importComponent("user/ItemDetails")
 				},
 				{
-					path: "manlistitem",
+					path: "/manlistitem",
 					name: "Man List Item",
 					meta: {title: "Man List Item"},
 					component: importComponent("user/ManListItemUser")
 				},
 				{
-					path: "womanlistitem",
+					path: "/womanlistitem",
 					name: "Woman List Item",
 					meta: {title: "Woman List Item"},
 					component: importComponent("user/WomanListItemUser")
 				},
 				{
-					path: "profile",
+					path: "/profile",
 					name: "Profile",
 					meta: {title: "Profile"},
 					component: importComponent("user/Profile")
 				},
 				{
-					path: "recommendationitem",
+					path: "/recommendationitem",
 					name: "Recommendation Item",
 					meta: {title: "Recommendation Item"},
 					component: importComponent("user/RecommendationItemUser")
 				},
 				{
-					path: "shoppingbag",
+					path: "/shoppingbag",
 					name: "Shopping Bag",
 					meta: {title: "Shopping Bag"},
 					component: importComponent("User/ShoppingBag")
 				},
 				{
-					path: "voucheruser",
+					path: "/voucheruser",
 					name: "Voucher User",
 					meta: {title: "Voucher User"},
 					component: importComponent("User/VoucherUser")
