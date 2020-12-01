@@ -1,5 +1,5 @@
 <template>
-	<div class="dashboard">
+	<div class="dashboardUser">
 
 		<v-dialog v-model="dialogConfirm" persistent max-width="400px">
 			<v-card>
@@ -44,7 +44,7 @@
 
 <script>
 export default {
-	name: "Dashboard",
+	name: "DashboardUser",
 	data() {
 		return {
 			drawer: true,
