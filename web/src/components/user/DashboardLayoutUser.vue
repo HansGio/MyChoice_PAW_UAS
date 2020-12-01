@@ -1,31 +1,6 @@
 <template>
 	<div class="dashboard">
-		<v-navigation-drawer v-model="drawer" class="fullheight" width="256" app>
-			<v-list-item>
-				<v-list-item-content>
-					<v-list-item-title class="title">
-						Kevin Ghebre
-					</v-list-item-title>
-					<v-list-item-subtitle> 180709774 </v-list-item-subtitle>
-				</v-list-item-content>
-			</v-list-item>
 
-			<v-divider></v-divider>
-
-			<v-list dense nav class="text-center">
-				<v-list-item
-					v-for="item in items"
-					:key="item.title"
-					link
-					tag="router-link"
-					:to="item.to"
-				>
-					<v-list-item-content>
-						<v-list-item-title>{{ item.title }}</v-list-item-title>
-					</v-list-item-content>
-				</v-list-item>
-			</v-list>
-		</v-navigation-drawer>
 		<v-dialog v-model="dialogConfirm" persistent max-width="400px">
 			<v-card>
 				<v-card-title>
@@ -45,10 +20,15 @@
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
+
 		<v-app-bar app fixed height="75px">
-			<v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+
+            <img class="mr-3" :src="require('@/assets/logo.png')" height="40"/>
+
 			<VSpacer />
 			<v-toolbar-items>
+                <v-btn text router @click="about"> About </v-btn>
+                <v-btn text router @click="contactus"> Contact Us </v-btn>
 				<v-btn text router><v-icon>mdi-account</v-icon></v-btn>
 				<v-btn text router><v-icon>mdi-power</v-icon></v-btn>
 			</v-toolbar-items>
@@ -74,15 +54,20 @@ export default {
 			logouts: "LogOut Success",
 
 			items: [
-				{ title: "Dashboard", to: "dashboard" },
-				{ title: "Daftar Produk", to: "daftar-produk" },
-				{ title: "Tambah Produk", to: "tambah-produk" },
-				{ title: "Daftar Pesanan", to: "daftar-pesanan" },
-				{ title: "Laporan", to: "laporan" },
-				{ title: "Voucher", to: "voucher" },
+				{ title: "About", to: "/About" },
+				{ title: "Contact Us", to: "/ContactUs" },
 			],
 		};
-	},
+    },
+    
+    methods:{
+        about(){
+            this.$router.push('About')
+        },
+        contactus(){
+            this.$router.push('ContactUs')
+        }
+    }
 };
 </script>
 

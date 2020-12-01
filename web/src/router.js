@@ -59,13 +59,11 @@ const router = new VueRouter({
 
 		{
 			path:"/",
-			name: "Dashboard",
-			meta:{ title: "Dashboard"},
 			component: importComponent("user/DashboardLayoutUser"),
 			children: [
 				{
 					path: "dashboard",
-					name: "RootUser",
+					name: "Dashboard",
 					meta: {title: "Dashboard"},
 					component: importComponent("user/DashboardUser")
 				},
