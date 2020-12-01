@@ -59,64 +59,62 @@ const router = new VueRouter({
 		},
 
 		{
-			path:"/user",
-			name: "User",
-			redirect: {name: "RootUser"},
-			component: importComponent("User/DashboardLayoutUser"),
+			path:"/",
+			component: importComponent("user/DashboardLayoutUser"),
 			children: [
+				{
+					path: "dashboard",
+					name: "RootUser",
+					meta: {title: "Dashboard"},
+					component: importComponent("user/DashboardUser")
+				},
 				{
 					path: "about",
 					name: "About",
 					meta: {title : "About Us"},
-					component: importComponent("User/About")
+					component: importComponent("user/About")
 				},
 				{
 					path: "checkout",
 					name: "Check Out",
 					meta: {title : "Check Out"},
-					component: importComponent("User/CheckOutUser")
+					component: importComponent("user/CheckOutUser")
 				},
 				{
 					path: "contactus",
 					name: "Contact Us",
 					meta: {title : "Contact Us"},
-					component: importComponent("User/ContactUs")
-				},
-				{
-					path: "dashboard",
-					name: "RootUser",
-					meta: {title: "Dashboard"},
-					component: importComponent("User/Dashboard")
+					component: importComponent("user/ContactUs")
 				},
 				{
 					path: "itemdetails",
 					name: "Item Details",
 					meta: {title: "Item Details"},
-					component: importComponent("User/ItemDetails")
+					component: importComponent("user/ItemDetails")
 				},
 				{
 					path: "manlistitem",
 					name: "Man List Item",
 					meta: {title: "Man List Item"},
-					component: importComponent("User/ManListItemUser")
+					component: importComponent("user/ManListItemUser")
 				},
 				{
 					path: "womanlistitem",
 					name: "Woman List Item",
 					meta: {title: "Woman List Item"},
-					component: importComponent("User/WomanListItemUser")
+					component: importComponent("user/WomanListItemUser")
 				},
 				{
 					path: "profile",
 					name: "Profile",
 					meta: {title: "Profile"},
-					component: importComponent("User/Profile")
+					component: importComponent("user/Profile")
 				},
 				{
 					path: "recommendationitem",
 					name: "Recommendation Item",
 					meta: {title: "Recommendation Item"},
-					component: importComponent("User/RecommendationItemUser")
+					component: importComponent("user/RecommendationItemUser")
 				},
 				{
 					path: "shoppingbag",
@@ -126,9 +124,9 @@ const router = new VueRouter({
 				},
 				{
 					path: "voucheruser",
-					name: "Voucher",
-					meta: {title: "Voucher"},
-					component: importComponent("User/Voucher")
+					name: "Voucher User",
+					meta: {title: "Voucher User"},
+					component: importComponent("User/VoucherUser")
 				},
 			],
 
