@@ -15,44 +15,43 @@ const router = new VueRouter({
 		{
 			path: "/admin",
 			name: "Admin",
-			redirect: { name: "Root" },
-			component: importComponent("Admin/DashboardLayout"),
+			component: importComponent("admin/DashboardLayout"),
 			children: [
 				{
 					path: "dashboard",
 					name: "Root",
 					meta: { title: "Dashboard" },
-					component: importComponent("Admin/Dashboard"),
+					component: importComponent("admin/Dashboard"),
 				},
 				{
 					path: "daftar-produk",
 					name: "Daftar Produk",
 					meta: { title: "Daftar Produk" },
-					component: importComponent("Admin/DaftarProduk"),
+					component: importComponent("admin/daftarProduk"),
 				},
 				{
 					path: "tambah-produk",
 					name: "Tambah Produk",
 					meta: { title: "Tambah Produk" },
-					component: importComponent("Admin/TambahProduk"),
+					component: importComponent("admin/tambahProduk"),
 				},
 				{
 					path: "daftar-pesanan",
 					name: "Daftar Pesanan",
 					meta: { title: "Daftar Pesanan" },
-					component: importComponent("Admin/DaftarPesanan"),
+					component: importComponent("admin/daftarPesanan"),
 				},
 				{
 					path: "laporan",
 					name: "Laporan",
 					meta: { title: "Laporan" },
-					component: importComponent("Admin/Laporan"),
+					component: importComponent("admin/laporan"),
 				},
 				{
 					path: "voucher",
 					name: "Voucher",
 					meta: { title: "Voucher" },
-					component: importComponent("Admin/Voucher"),
+					component: importComponent("admin/Voucher"),
 				},
 			],
 
@@ -60,6 +59,8 @@ const router = new VueRouter({
 
 		{
 			path:"/",
+			name: "Dashboard",
+			meta:{ title: "Dashboard"},
 			component: importComponent("user/DashboardLayoutUser"),
 			children: [
 				{
