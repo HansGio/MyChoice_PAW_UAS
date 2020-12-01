@@ -56,6 +56,9 @@ const router = new VueRouter({
 				},
 			],
 
+		},
+
+		{
 			path:"/user",
 			name: "User",
 			redirect: {name: "RootUser"},
