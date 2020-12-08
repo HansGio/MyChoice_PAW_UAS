@@ -1,5 +1,5 @@
 <template>
-	<div class="dashboardUser">
+	<div class="dashboardUser mt-16">
 		<v-dialog v-model="dialogConfirm" persistent max-width="400px">
 			<v-card>
 				<v-card-title>
