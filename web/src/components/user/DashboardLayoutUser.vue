@@ -1,5 +1,5 @@
 <template>
-	<div class="dashboardUser">
+	<div class="dashboardUser mt-16">
 
 		<v-dialog v-model="dialogConfirm" persistent max-width="400px">
 			<v-card>
@@ -23,12 +23,13 @@
 
 		<v-app-bar app fixed height="75px">
 
-            <img class="mr-3" :src="require('@/assets/logo.png')" height="40"/>
+            <img @click="dashboard" class="mr-3" :src="require('@/assets/logo.png')" height="40"/>
 
 			<VSpacer />
 			<v-toolbar-items>
                 <v-btn text router @click="about"> About </v-btn>
                 <v-btn text router @click="contactus"> Contact Us </v-btn>
+				<v-btn text router @click="voucher"> Voucher </v-btn>
 				<v-btn text router><v-icon>mdi-account</v-icon></v-btn>
 				<v-btn text router><v-icon>mdi-power</v-icon></v-btn>
 			</v-toolbar-items>
@@ -56,6 +57,7 @@ export default {
 			items: [
 				{ title: "About", to: "/About" },
 				{ title: "Contact Us", to: "/ContactUs" },
+				{ title: "Voucher", to: "/VoucherUser"}
 			],
 		};
     },
@@ -66,7 +68,13 @@ export default {
         },
         contactus(){
             this.$router.push('ContactUs')
-        }
+        },
+		voucher(){
+			this.$router.push('VoucherUser')
+		},
+		dashboard(){
+			this.$router.push('dashboard')
+		}
     }
 };
 </script>
