@@ -77,4 +77,60 @@ class AuthController extends Controller
             'message' => 'Successfully logged out'
         ]);
     }
+
+    public function details()
+    {
+        $user = Auth::user();
+
+        if (is_null($user)) {
+            return response([
+                'message' => 'User Not Found',
+            ], 404);
+        }
+
+        return response([
+            'message' => 'User Data Retrieved',
+            'user' => $user,
+        ], 200); // return data user dalam bentuk json
+    }
+
+    public function update(Request $request)
+    {
+        $user = Auth::User();
+
+        if (is_null($user))
+            return response(['message' => 'User not found!'], 404);
+
+        $data = $request->all();
+        $validate = Validator::make($data, [
+            'name' => 'required|max:60',
+            'email' => 'required|email:rfc,dns',
+            'birth_date' => 'required|date',
+            'gender' => 'required',
+            'address' => 'required|max:255',
+            'image64' => 'nullable',
+        ]);
+
+        if ($validate->fails())
+            return response(['message' => $validate->errors()], 400);
+
+        if (isset($data['image64'])) {
+            $user->image64 = $data['image64'];
+        }
+
+        $user->name = $data['name'];
+        $user->email = $data['email'];
+        $user->birth_date = $data['birth_date'];
+        $user->gender = $data['gender'];
+        $user->address = $data['address'];
+
+
+        if ($user->save())
+            return response([
+                'message' => 'Update Success',
+                'user' => $user
+            ], 200);
+
+        return response(['message' => 'Update User Failed'], 400);
+    }
 }
