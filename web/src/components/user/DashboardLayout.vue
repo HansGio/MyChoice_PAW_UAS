@@ -32,6 +32,7 @@
 			<v-toolbar-items>
 				<v-btn text router to="/about"> About </v-btn>
 				<v-btn text router to="/contact-us"> Contact Us </v-btn>
+				<v-btn text router to="/voucher"> Voucher </v-btn>
 				<v-btn text router to="/profile"><v-icon>mdi-account</v-icon></v-btn>
 				<v-btn text router><v-icon>mdi-power</v-icon></v-btn>
 			</v-toolbar-items>
@@ -59,6 +60,7 @@ export default {
 			items: [
 				{ title: "About", to: "/about" },
 				{ title: "Contact Us", to: "/contact-us" },
+				{ title: "Voucher", to: "/voucher" },
 			],
 		};
 	},
