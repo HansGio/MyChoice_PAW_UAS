@@ -1,6 +1,5 @@
 <template>
 	<div class="dashboardUser">
-
 		<v-dialog v-model="dialogConfirm" persistent max-width="400px">
 			<v-card>
 				<v-card-title>
@@ -22,14 +21,18 @@
 		</v-dialog>
 
 		<v-app-bar app fixed height="75px">
-
-            <img class="mr-3" :src="require('@/assets/logo.png')" height="40"/>
+			<v-img
+				class="mr-3"
+				:src="require('@/assets/logo.png')"
+				max-width="150"
+				@click="$router.push('/home')"
+			/>
 
 			<VSpacer />
 			<v-toolbar-items>
-                <v-btn text router @click="about"> About </v-btn>
-                <v-btn text router @click="contactus"> Contact Us </v-btn>
-				<v-btn text router><v-icon>mdi-account</v-icon></v-btn>
+				<v-btn text router to="/about"> About </v-btn>
+				<v-btn text router to="/contact-us"> Contact Us </v-btn>
+				<v-btn text router to="/profile"><v-icon>mdi-account</v-icon></v-btn>
 				<v-btn text router><v-icon>mdi-power</v-icon></v-btn>
 			</v-toolbar-items>
 		</v-app-bar>
@@ -54,20 +57,13 @@ export default {
 			logouts: "LogOut Success",
 
 			items: [
-				{ title: "About", to: "/About" },
-				{ title: "Contact Us", to: "/ContactUs" },
+				{ title: "About", to: "/about" },
+				{ title: "Contact Us", to: "/contact-us" },
 			],
 		};
-    },
-    
-    methods:{
-        about(){
-            this.$router.push('About')
-        },
-        contactus(){
-            this.$router.push('ContactUs')
-        }
-    }
+	},
+
+	methods: {},
 };
 </script>
 

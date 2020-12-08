@@ -13,123 +13,127 @@ const router = new VueRouter({
 	mode: "history",
 	routes: [
 		{
-			path: "/admin",
-			name: "Admin",
-			component: importComponent("admin/DashboardLayout"),
+			path: "/",
+			redirect: { name: "Home" },
+			meta: { requiresAuth: true },
+			component: importComponent("User/DashboardLayout"),
 			children: [
 				{
-					path: "/dashboardAdmin",
-					name: "Dashboard Admin",
-					meta: { title: "Dashboard" },
-					component: importComponent("admin/Dashboard"),
-				},
-				{
-					path: "/daftar-produk",
-					name: "Daftar Produk",
-					meta: { title: "Daftar Produk" },
-					component: importComponent("admin/daftarProduk"),
-				},
-				{
-					path: "/tambah-produk",
-					name: "Tambah Produk",
-					meta: { title: "Tambah Produk" },
-					component: importComponent("admin/tambahProduk"),
-				},
-				{
-					path: "/daftar-pesanan",
-					name: "Daftar Pesanan",
-					meta: { title: "Daftar Pesanan" },
-					component: importComponent("admin/daftarPesanan"),
-				},
-				{
-					path: "/laporan",
-					name: "Laporan",
-					meta: { title: "Laporan" },
-					component: importComponent("admin/laporan"),
-				},
-				{
-					path: "/voucher",
-					name: "Voucher",
-					meta: { title: "Voucher" },
-					component: importComponent("admin/Voucher"),
-				},
-			],
-
-		},
-
-		{
-			path:"/",
-			redirect:"dashboard",
-			component: importComponent("user/DashboardLayoutUser"),
-			children: [
-				{
-					path: "/dashboard",
-					name: "Dashboard",
-					meta: {title: "Dashboard"},
-					component: importComponent("user/DashboardUser")
+					path: "/home",
+					name: "Home",
+					meta: { title: "Home" },
+					component: importComponent("User/Home"),
 				},
 				{
 					path: "/about",
 					name: "About",
-					meta: {title : "About Us"},
-					component: importComponent("user/About")
+					meta: { title: "About Us" },
+					component: importComponent("User/About"),
 				},
 				{
-					path: "/checkout",
+					path: "/check-out",
 					name: "Check Out",
-					meta: {title : "Check Out"},
-					component: importComponent("user/CheckOutUser")
+					meta: { title: "Check Out" },
+					component: importComponent("User/CheckOut"),
 				},
 				{
-					path: "/contactus",
+					path: "/contact-us",
 					name: "Contact Us",
-					meta: {title : "Contact Us"},
-					component: importComponent("user/ContactUs")
+					meta: { title: "Contact Us" },
+					component: importComponent("User/ContactUs"),
 				},
 				{
-					path: "/itemdetails",
+					path: "/item-details",
 					name: "Item Details",
-					meta: {title: "Item Details"},
-					component: importComponent("user/ItemDetails")
+					meta: { title: "Item Details" },
+					component: importComponent("User/ItemDetails"),
 				},
 				{
-					path: "/manlistitem",
+					path: "/man-list-item",
 					name: "Man List Item",
-					meta: {title: "Man List Item"},
-					component: importComponent("user/ManListItemUser")
+					meta: { title: "Man List Item" },
+					component: importComponent("User/ManListItem"),
 				},
 				{
-					path: "/womanlistitem",
+					path: "/woman-list-item",
 					name: "Woman List Item",
-					meta: {title: "Woman List Item"},
-					component: importComponent("user/WomanListItemUser")
+					meta: { title: "Woman List Item" },
+					component: importComponent("User/WomanListItem"),
 				},
 				{
 					path: "/profile",
 					name: "Profile",
-					meta: {title: "Profile"},
-					component: importComponent("user/Profile")
+					meta: { title: "Profile" },
+					component: importComponent("User/Profile"),
 				},
 				{
-					path: "/recommendationitem",
+					path: "/recommendation-item",
 					name: "Recommendation Item",
-					meta: {title: "Recommendation Item"},
-					component: importComponent("user/RecommendationItemUser")
+					meta: { title: "Recommendation Item" },
+					component: importComponent("user/RecommendationItem"),
 				},
 				{
-					path: "/shoppingbag",
+					path: "/shopping-bag",
 					name: "Shopping Bag",
-					meta: {title: "Shopping Bag"},
-					component: importComponent("User/ShoppingBag")
+					meta: { title: "Shopping Bag" },
+					component: importComponent("User/ShoppingBag"),
 				},
 				{
-					path: "/voucheruser",
+					path: "/voucher",
 					name: "Voucher User",
-					meta: {title: "Voucher User"},
-					component: importComponent("User/VoucherUser")
+					meta: { title: "Voucher User" },
+					component: importComponent("User/Voucher"),
+				},
+				{
+					path: "/admin",
+					name: "Admin",
+					meta: { adminArea: true },
+					redirect: { name: "Dashboard Admin" },
+					component: importComponent("Admin/DashboardLayout"),
+					children: [
+						{
+							path: "dashboard",
+							name: "Dashboard Admin",
+							meta: { title: "Dashboard" },
+							component: importComponent("Admin/Dashboard"),
+						},
+						{
+							path: "daftar-produk",
+							name: "Daftar Produk",
+							meta: { title: "Daftar Produk" },
+							component: importComponent("Admin/DaftarProduk"),
+						},
+						{
+							path: "tambah-produk",
+							name: "Tambah Produk",
+							meta: { title: "Tambah Produk" },
+							component: importComponent("Admin/TambahProduk"),
+						},
+						{
+							path: "daftar-pesanan",
+							name: "Daftar Pesanan",
+							meta: { title: "Daftar Pesanan" },
+							component: importComponent("Admin/DaftarPesanan"),
+						},
+						{
+							path: "laporan",
+							name: "Laporan",
+							meta: { title: "Laporan" },
+							component: importComponent("Admin/Laporan"),
+						},
+						{
+							path: "voucher",
+							name: "Voucher",
+							meta: { title: "Voucher" },
+							component: importComponent("Admin/Voucher"),
+						},
+					],
 				},
 			],
-
+		},
+		{
+			path: "*",
+			redirect: "/",
 		},
 	],
 });

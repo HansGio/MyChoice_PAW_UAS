@@ -7,7 +7,7 @@
 				<v-row class="mb-6" no-gutters>
 					<v-tab> Semua Produk </v-tab>
 					<v-tab> Aktif </v-tab>
-					<v-tab> Non Aktif </v-tab>
+					<v-tab> NonAktif </v-tab>
 					<v-col md="3" offset-md="4">
 						<v-text-field
 							v-model="search"
@@ -77,7 +77,7 @@
 								<v-data-table
 									:headers="headers"
 									:items="desserts"
-									:search="`aktif`"
+									:search="`Aktif`"
 								>
 									<template
 										v-slot:[`item.name`]="{
@@ -133,7 +133,7 @@
 								<v-data-table
 									:headers="headers"
 									:items="desserts"
-									:search="`non aktif`"
+									:search="`Nonaktif`"
 								>
 									<template
 										v-slot:[`item.name`]="{
@@ -258,7 +258,7 @@ export default {
 			error_message: "",
 			color: "",
 			search: null,
-			aktifItem: "aktif",
+			aktifItem: "Aktif",
 			dialog: false,
 			dialogConfirm: false,
 
@@ -291,7 +291,7 @@ export default {
 					size: "s,m,l",
 					harga: 200000,
 					stock: 20,
-					status: "aktif",
+					status: "Aktif",
 				},
 				{
 					name: "babi",
@@ -299,7 +299,7 @@ export default {
 					size: "s,m,l",
 					harga: 100000,
 					stock: 10,
-					status: "non aktif",
+					status: "Nonaktif",
 				},
 				{
 					name: "kaki babi",
@@ -307,7 +307,7 @@ export default {
 					size: "s,m,l",
 					harga: 100000,
 					stock: 10,
-					status: "non aktif",
+					status: "Nonaktif",
 				},
 			],
 		};
@@ -345,7 +345,7 @@ export default {
 			};
 		},
 		getColor(status) {
-			if (status == "aktif") return "green";
+			if (status == "Aktif") return "green";
 			else return "red";
 		},
 	},

@@ -7,8 +7,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 use Carbon\Carbon;
+use App\Notifications\VerifyApiEmail;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use Notifiable, HasApiTokens;
 
@@ -18,7 +19,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'birth_date', 'gender', 'address', 'image64'
     ];
 
     /**
@@ -52,4 +53,9 @@ class User extends Authenticatable
             return Carbon::parse($this->attributes['updated_at'])->format('Y-m-d H:i:s');
         }
     } //convert attribute updated_at ke format Y-m-d H:i:s
+
+    public function sendApiEmailVerificationNotification()
+    {
+        $this->notify(new VerifyApiEmail); // my notification
+    }
 }
