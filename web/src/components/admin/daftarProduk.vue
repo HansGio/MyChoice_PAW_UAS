@@ -23,151 +23,38 @@
 						<v-row>
 							<v-col>
 								<v-data-table :headers="headers" :items="desserts" :search="search">
-									<template
-										v-slot:[`item.name`]="{
-											item,
-										}"
-									>
+									<template v-slot:[`item.name`]="{ item }">
 										<div class="p-2 d-flex align-center">
 											<v-img
-												:src="
-													`https://images.unsplash.com/photo-1606654951863-70346cd12201?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1268&q=80`
-												"
+												src="https://images.unsplash.com/photo-1606654951863-70346cd12201?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1268&q=80"
 												:alt="item.name"
 												max-height="100px"
 												max-width="100px"
-											></v-img>
+											/>
 											<div class="ml-3">
 												{{ item.name }}
 												<v-spacer></v-spacer>
-												{{ item.size }}
+												{{ getColor(item.active) }}
 											</div>
 										</div>
 									</template>
 
-									<template
-										v-slot:item.status="{
-											item,
-										}"
-									>
-										<v-chip :color="getColor(item.status)" dark>
-											{{ item.status }}
+									<template v-slot:[`item.stock`]="{ item }">
+										{{
+											item.stock_s +
+												item.stock_m +
+												item.stock_l +
+												item.stock_xl
+										}}
+									</template>
+
+									<template v-slot:[`item.active`]="{ item }">
+										<v-chip :color="getColor(item.active)" dark>
+											{{ item.active ? "Aktif" : "Nonaktif" }}
 										</v-chip>
 									</template>
 
-									<template v-slot:item.pengaturan>
-										<v-icon large color="darken-2" @click="dialog = true">
-											mdi-trash-can-outline
-										</v-icon>
-
-										<v-icon large color="darken-2" @click="checkDialog = true">
-											mdi-eyedropper-variant
-										</v-icon>
-									</template>
-								</v-data-table>
-							</v-col>
-						</v-row>
-					</v-container>
-				</v-tab-item>
-
-				<v-tab-item>
-					<v-container fluid>
-						<v-row>
-							<v-col>
-								<v-data-table
-									:headers="headers"
-									:items="desserts"
-									:search="`Aktif`"
-								>
-									<template
-										v-slot:[`item.name`]="{
-											item,
-										}"
-									>
-										<div class="p-2 d-flex align-center">
-											<v-img
-												:src="
-													`https://images.unsplash.com/photo-1606654951863-70346cd12201?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1268&q=80`
-												"
-												:alt="item.name"
-												max-height="100px"
-												max-width="100px"
-											></v-img>
-											<div class="ml-3">
-												{{ item.name }}
-												<v-spacer></v-spacer>
-												{{ item.size }}
-											</div>
-										</div>
-									</template>
-
-									<template
-										v-slot:item.status="{
-											item,
-										}"
-									>
-										<v-chip :color="getColor(item.status)" dark>
-											{{ item.status }}
-										</v-chip>
-									</template>
-
-									<template v-slot:item.pengaturan>
-										<v-icon large color="darken-2" @click="dialog = true">
-											mdi-trash-can-outline
-										</v-icon>
-
-										<v-icon large color="darken-2" @click="checkDialog = true">
-											mdi-eyedropper-variant
-										</v-icon>
-									</template>
-								</v-data-table>
-							</v-col>
-						</v-row>
-					</v-container>
-				</v-tab-item>
-
-				<v-tab-item>
-					<v-container fluid>
-						<v-row>
-							<v-col>
-								<v-data-table
-									:headers="headers"
-									:items="desserts"
-									:search="`Nonaktif`"
-								>
-									<template
-										v-slot:[`item.name`]="{
-											item,
-										}"
-									>
-										<div class="p-2 d-flex align-center">
-											<v-img
-												:src="
-													`https://images.unsplash.com/photo-1606654951863-70346cd12201?ixlib=rb-1.2.1&ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&auto=format&fit=crop&w=1268&q=80`
-												"
-												:alt="item.name"
-												max-height="100px"
-												max-width="100px"
-											></v-img>
-											<div class="ml-3">
-												{{ item.name }}
-												<v-spacer></v-spacer>
-												{{ item.size }}
-											</div>
-										</div>
-									</template>
-
-									<template
-										v-slot:item.status="{
-											item,
-										}"
-									>
-										<v-chip :color="getColor(item.status)" dark>
-											{{ item.status }}
-										</v-chip>
-									</template>
-
-									<template v-slot:item.pengaturan>
+									<template v-slot:[`item.pengaturan`]>
 										<v-icon large color="darken-2" @click="dialog = true">
 											mdi-trash-can-outline
 										</v-icon>
@@ -279,35 +166,47 @@ export default {
 					sortable: false,
 					value: "name",
 				},
-				{ text: "Harga (Rp)", value: "harga" },
+				{ text: "Harga (Rp)", value: "price" },
 				{ text: "Stock #", value: "stock" },
-				{ text: "Status", value: "status" },
+				{ text: "Status", value: "active" },
 				{ text: "Pengaturan", value: "pengaturan" },
 			],
 			desserts: [
 				{
 					name: "ayam",
+					gender: "Man",
 					image: "aa",
-					size: "s,m,l",
-					harga: 200000,
-					stock: 20,
-					status: "Aktif",
+					stock_s: 2,
+					stock_m: 3,
+					stock_l: 6,
+					stock_xl: 2,
+					price: 200000,
+					description: "Kaos bang",
+					active: true,
 				},
 				{
-					name: "babi",
+					name: "ayam",
+					gender: "Man",
 					image: "aa",
-					size: "s,m,l",
-					harga: 100000,
-					stock: 10,
-					status: "Nonaktif",
+					stock_s: 2,
+					stock_m: 3,
+					stock_l: 6,
+					stock_xl: 2,
+					price: 200000,
+					description: "Kaos bang",
+					active: true,
 				},
 				{
-					name: "kaki babi",
+					name: "ayam",
+					gender: "Man",
 					image: "aa",
-					size: "s,m,l",
-					harga: 100000,
-					stock: 10,
-					status: "Nonaktif",
+					stock_s: 2,
+					stock_m: 3,
+					stock_l: 6,
+					stock_xl: 2,
+					price: 200000,
+					description: "Kaos bang",
+					active: false,
 				},
 			],
 		};
@@ -345,7 +244,7 @@ export default {
 			};
 		},
 		getColor(status) {
-			if (status == "Aktif") return "green";
+			if (status) return "green";
 			else return "red";
 		},
 	},

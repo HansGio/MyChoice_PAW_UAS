@@ -20,11 +20,11 @@
 			</v-card>
 		</v-dialog>
 
-		<v-app-bar app fixed height="75px">
+		<v-app-bar app fixed height="60px">
 			<v-img
 				class="mr-3"
 				:src="require('@/assets/logo.png')"
-				max-width="150"
+				max-width="130"
 				@click="$router.push('/home')"
 			/>
 

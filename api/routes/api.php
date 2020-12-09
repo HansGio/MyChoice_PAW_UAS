@@ -28,4 +28,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('logout', 'Api\AuthController@logout');
     Route::get('details', 'Api\AuthController@details');
     Route::put('update', 'Api\AuthController@update');
+
+    Route::get('item', 'Api\ItemController@index');
+    Route::get('item/{id}', 'Api\ItemController@show');
+    Route::post('item', 'Api\ItemController@store');
+    Route::put('item/{id}', 'Api\ItemController@update');
+    Route::delete('item/{id}', 'Api\ItemController@destroy');
 });
