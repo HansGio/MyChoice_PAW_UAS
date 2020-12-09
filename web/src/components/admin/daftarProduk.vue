@@ -31,21 +31,49 @@
 												max-height="100px"
 												max-width="100px"
 											/>
-											<div class="ml-3">
-												{{ item.name }}
+											<div class="ml-4">
+												<h6>
+													{{ item.name }}
+													<v-icon small>{{
+														item.gender.toLowerCase() == "man"
+															? "mdi-gender-male"
+															: "mdi-gender-female"
+													}}</v-icon>
+												</h6>
 												<v-spacer></v-spacer>
-												{{ getColor(item.active) }}
+												<span class="caption">{{ getSizes(item) }}</span>
 											</div>
 										</div>
 									</template>
 
 									<template v-slot:[`item.stock`]="{ item }">
-										{{
-											item.stock_s +
-												item.stock_m +
-												item.stock_l +
-												item.stock_xl
-										}}
+										<h6 class="mt-3">
+											{{
+												"Total = " +
+													(item.stock_s +
+														item.stock_m +
+														item.stock_l +
+														item.stock_xl)
+											}}
+										</h6>
+										<div class="caption mb-3">
+											{{ "S = " + item.stock_s }}<br />
+											{{ "M = " + item.stock_m }}<br />
+											{{ "L = " + item.stock_l }}<br />
+											{{ "XL = " + item.stock_xl }}
+										</div>
+									</template>
+
+									<template v-slot:[`item.price`]="{ item }">
+										<h5>
+											{{
+												"Rp. " +
+													item.price
+														.toString()
+														.replace(/\B(?=(\d{3})+(?!\d))/g, ".") +
+													",00"
+											}}
+										</h5>
 									</template>
 
 									<template v-slot:[`item.active`]="{ item }">
@@ -55,11 +83,16 @@
 									</template>
 
 									<template v-slot:[`item.pengaturan`]>
-										<v-icon large color="darken-2" @click="dialog = true">
+										<v-icon
+											class="mr-1"
+											medium
+											color="darken-2"
+											@click="dialog = true"
+										>
 											mdi-trash-can-outline
 										</v-icon>
 
-										<v-icon large color="darken-2" @click="checkDialog = true">
+										<v-icon medium color="darken-2" @click="checkDialog = true">
 											mdi-eyedropper-variant
 										</v-icon>
 									</template>
@@ -173,7 +206,7 @@ export default {
 			],
 			desserts: [
 				{
-					name: "ayam",
+					name: "Ayam",
 					gender: "Man",
 					image: "aa",
 					stock_s: 2,
@@ -185,8 +218,8 @@ export default {
 					active: true,
 				},
 				{
-					name: "ayam",
-					gender: "Man",
+					name: "Ayam",
+					gender: "woman",
 					image: "aa",
 					stock_s: 2,
 					stock_m: 3,
@@ -197,7 +230,7 @@ export default {
 					active: true,
 				},
 				{
-					name: "ayam",
+					name: "Ayam",
 					gender: "Man",
 					image: "aa",
 					stock_s: 2,
@@ -246,6 +279,15 @@ export default {
 		getColor(status) {
 			if (status) return "green";
 			else return "red";
+		},
+		getSizes(item) {
+			let sizes = [];
+			if (item.stock_s) sizes.push("S");
+			if (item.stock_m) sizes.push("M");
+			if (item.stock_l) sizes.push("L");
+			if (item.stock_xl) sizes.push("XL");
+
+			return "Ukuran: " + sizes.join("/");
 		},
 	},
 	computed: {
