@@ -65,7 +65,7 @@
 									</template>
 
 									<template v-slot:[`item.price`]="{ item }">
-										<h5>
+										<h6>
 											{{
 												"Rp. " +
 													item.price
@@ -73,7 +73,7 @@
 														.replace(/\B(?=(\d{3})+(?!\d))/g, ".") +
 													",00"
 											}}
-										</h5>
+										</h6>
 									</template>
 
 									<template v-slot:[`item.active`]="{ item }">
