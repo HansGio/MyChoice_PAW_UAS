@@ -22,7 +22,7 @@
 					<v-container fluid>
 						<v-row>
 							<v-col>
-								<v-data-table :headers="headers" :items="desserts" :search="search">
+								<v-data-table :headers="headers" :items="items" :search="search">
 									<template v-slot:[`item.name`]="{ item }">
 										<div class="p-2 d-flex align-center">
 											<v-img
@@ -181,9 +181,8 @@ export default {
 			aktifItem: "Aktif",
 			dialog: false,
 			dialogConfirm: false,
-
-			product: new FormData(),
-			products: [],
+			item: new FormData(),
+			items: [],
 			form: {
 				nama_produk: null,
 				satuan: null,
@@ -204,7 +203,7 @@ export default {
 				{ text: "Status", value: "active" },
 				{ text: "Pengaturan", value: "pengaturan" },
 			],
-			desserts: [
+			products: [
 				{
 					name: "Ayam",
 					gender: "Man",
@@ -245,6 +244,18 @@ export default {
 		};
 	},
 	methods: {
+		readData() {
+			var url = this.$api + "/item";
+			this.$http
+				.get(url, {
+					headers: {
+						Authorization: "Bearer " + localStorage.getItem("token"),
+					},
+				})
+				.then((response) => {
+					this.items = response.data.data;
+				});
+		},
 		editHandler(item) {
 			this.inputType = "Ubah";
 			this.editId = item.id;

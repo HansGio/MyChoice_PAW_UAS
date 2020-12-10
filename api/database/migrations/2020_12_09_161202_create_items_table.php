@@ -23,7 +23,7 @@ class CreateItemsTable extends Migration
             $table->integer("stock_xl");
             $table->boolean("active")->default(true);
             $table->string("description");
-            $table->double("price");
+            $table->decimal("price", 10, 2);
             $table->text("image64")->nullable();
             $table->timestamps();
         });

@@ -16,6 +16,7 @@ class AuthController extends Controller
         $validate = Validator::make($registrationData, [
             'name' => 'required|max:60',
             'email' => 'required|email:rfc,dns|unique:users',
+            'phone' => 'required|digits_between:10,13',
             'birth_date' => 'required|date',
             'gender' => 'required',
             'address' => 'required|max:255',
@@ -113,6 +114,7 @@ class AuthController extends Controller
         $validate = Validator::make($data, [
             'name' => 'required|max:60',
             'email' => 'required|email:rfc,dns',
+            'phone' => 'required|digits_between:10,13',
             'birth_date' => 'required|date',
             'gender' => 'required',
             'address' => 'required|max:255',
@@ -130,6 +132,7 @@ class AuthController extends Controller
 
         $user->name = $data['name'];
         $user->email = $data['email'];
+        $user->phone = $data['phone'];
         $user->birth_date = $data['birth_date'];
         $user->gender = $data['gender'];
         $user->address = $data['address'];

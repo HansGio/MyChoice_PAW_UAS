@@ -11,7 +11,7 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = Item::all(); //mengambil semua data item
+        $items = Item::all();
 
         if (count($items) > 0) {
             return response([
@@ -25,7 +25,6 @@ class ItemController extends Controller
         ], 404); //return message data item kosong
     }
 
-    //method untuk menampilkan 1 data item (search)
     public function show($id)
     {
         $item = Item::find($id); //mencari data item berdasarkan id
@@ -42,10 +41,9 @@ class ItemController extends Controller
         ], 404); //return message saat data item tidak ditemukan
     }
 
-    //method untuk menambah 1 data item baru (create)
     public function store(Request $request)
     {
-        $storeData = $request->all(); //mengambil semua input dari api client
+        $storeData = $request->all();
         $validate = Validator::make($storeData, [
             'name' => 'required',
             'gender' => 'required',
@@ -57,19 +55,19 @@ class ItemController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'image64' => 'nullable',
-        ]); //membuat rule validasi input
+        ]);
 
         if ($validate->fails())
             return response(['message' => $validate->errors()], 460); //return error invalid input
 
         $item = Item::create($storeData); //menambah data item baru
+
         return response([
             'message' => 'Add Item Success',
             'item' => $item,
         ], 200); //return data item baru dalam bentuk json
     }
 
-    //method untuk menghapus 1 data item (delete)
     public function destroy($id)
     {
         $item = Item::find($id); //mencari data item berdasarkan id
@@ -86,22 +84,23 @@ class ItemController extends Controller
                 'item' => $item,
             ], 200);
         } //return message saat berhasil menghapus data item
+
         return response([
             'message' => 'Delete Item Failed',
         ], 400); //return message saat gagal menghapus data item
     }
 
-    //method untuk mengubah 1 data item (update)
     public function update(Request $request, $id)
     {
         $item = Item::find($id); //mencari data item berdasarkan id
+
         if (is_null($item)) {
             return response([
                 'message' => 'Item Not Found',
             ], 404);
         } //return message saat data item tidak ditemukan
 
-        $updateData = $request->all(); //mengambil semua input dari api client
+        $updateData = $request->all();
         $validate = Validator::make($updateData, [
             'name' => 'required',
             'gender' => 'required',
@@ -113,13 +112,13 @@ class ItemController extends Controller
             'description' => 'required',
             'price' => 'required|numeric',
             'image64' => 'nullable',
-        ]); //membuat rule validasi input
+        ]);
 
         if ($validate->fails())
-            return response(['message' => $validate->errors()], 400); //return error invalid input
+            return response(['message' => $validate->errors()], 400); // return error invalid input
 
         if (isset($updateData['image64']))
-            $item->price = $updateData['image64'];
+            $item->image64 = $updateData['image64'];
 
         $item->name = $updateData['name'];
         $item->gender = $updateData['gender'];
@@ -136,9 +135,10 @@ class ItemController extends Controller
                 'message' => 'Update Item Success',
                 'item' => $item,
             ], 200);
-        } //return data item yang telah di edit dalam bentuk json
+        } // return data item yang telah di edit dalam bentuk json
+
         return response([
             'message' => 'Update Item Failed',
-        ], 400); //return message saat item gagal di edit
+        ], 400); // return message saat item gagal di edit
     }
 }
