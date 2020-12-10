@@ -34,7 +34,6 @@
                                 <br />
                                 Size XL {{ product.stock_xl }}
                                 <br />
-
                                 <v-spacer></v-spacer>
                                 <p class="headline">
                                     Price Tag : {{ product.price }}

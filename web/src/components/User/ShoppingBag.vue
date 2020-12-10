@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
     <div>
         <v-card class="mx-auto" elevation="3" outlined>
             <v-card
@@ -24,7 +23,7 @@
                                 class="hidden-sm-and-down" 
                                 md="6"
                             >
-                                <v-img :src="require('@/assets/image1.jpg')" class="image-size">
+                                <v-img :src="product.image64" class="image-size">
                                     <!-- <v-card-title
                                         v-text="card.title"
                                     ></v-card-title> -->
@@ -130,18 +129,3 @@ export default {
     width: 100px;
 }
 </style>
-=======
-    <v-row>
-        <v-col class="text-center">
-            <base-text class="text-center"> SHOPPING BAG </base-text>
-        </v-col>
-        <br />
-        <v-img
-            lazy-src="https://picsum.photos/id/11/10/6"
-            max-height="150"
-            max-width="250"
-            src="https://picsum.photos/id/11/500/300"
-        ></v-img>
-    </v-row>
-</template>
->>>>>>> 396623db70f19dbc4774d973b803b27b9ef6d6b5
