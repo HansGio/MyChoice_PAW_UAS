@@ -2,10 +2,10 @@
 	<v-main class="list">
 		<v-data-table :headers="headers" :items="orders" :search="search">
 			<template v-slot:[`item.statusPesanan`]>
-				<div>
-					<v-btn elevation="2" color="green" class="mb-2" dark>Kirim</v-btn>
+				<div class="pa-4">
+					<v-btn width="90px" elevation="2" color="green" class="mb-2" dark>Kirim</v-btn>
 					<br />
-					<v-btn elevation="2" color="red" dark>Batal</v-btn>
+					<v-btn width="90px" elevation="2" color="red" dark>Batal</v-btn>
 				</div>
 			</template>
 
