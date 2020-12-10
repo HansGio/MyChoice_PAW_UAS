@@ -140,8 +140,6 @@ export default {
                     },
                 })
                 .then((response) => {
-                    localStorage.setItem("id", response.data.user.id);
-                    localStorage.setItem("token", response.data.access_token);
                     localStorage.setItem("name", response.data.user.name);
                     localStorage.setItem("email", response.data.user.email);
                     localStorage.setItem("phone", response.data.user.phone);
@@ -151,8 +149,6 @@ export default {
                     );
                     localStorage.setItem("gender", response.data.user.gender);
                     localStorage.setItem("address", response.data.user.address);
-                    localStorage.setItem("image64", response.data.user.image64);
-                    localStorage.setItem("phone", response.data.user.phone);
                     this.error_message = response.data.message;
                     this.color = "green";
                     this.snackbar = true;
