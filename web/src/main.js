@@ -7,7 +7,7 @@ import axios from "axios";
 Vue.config.productionTip = false;
 
 Vue.prototype.$http = axios;
-Vue.prototype.$api = "http://127.0.0.1:8000/api";
+Vue.prototype.$api = "https://my-choice-api.herokuapp.com/api";
 
 new Vue({
 	vuetify,
