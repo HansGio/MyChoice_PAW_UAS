@@ -66,6 +66,7 @@
 					outlined
 					v-model="password"
 					label="Password"
+                    type="password"
 					required
 				></v-text-field>
 
@@ -74,6 +75,7 @@
 					outlined
 					v-model="confirmPassword"
 					label="Confirm Password"
+                    type="password"
 					required
 				></v-text-field>
 
@@ -102,7 +104,10 @@ export default {
 		email: "",
 		password:"",
 		address:"",
-		confirmPassword:"",
+        confirmPassword:"",
+        load: false,
+        snackbar: false,
+        error_message: "",
 		items:['Man' , 'Woman'],
 		// select: null,
 		// checkbox: null,
@@ -118,8 +123,6 @@ export default {
 			custom: {
 				name: {
 					required: () => "Name can not be empty",
-					max: "The name field may not be greater than 10 characters",
-					// custom messages
 				},
 				select: {
 					required: "Select field is required",
@@ -138,7 +141,46 @@ export default {
 	methods: {
 		login(){
 			this.$router.push('/login')
-		}
+        },
+         submit() {
+            console.log(this.email);
+            // if (this.$refs.form.validate()) {
+            //cek apakah yg akan dikirim sudah valid
+            this.load = true;
+            console.log(this.email);
+            console.log(this.password);
+            console.log(this.gender);
+            console.log(this.name);
+            console.log(this.birth_date);
+            this.$http
+                .post(this.$api + "/register", {
+                name: this.name,
+                email: this.email,
+                password: this.password,
+                gender: this.gender,
+                birth_date: this.birth_date,
+
+                })
+                .then((response) => {
+                // localStorage.setItem("id", response.data.user.id); //menyimpan id user yang sedang login
+                // localStorage.setItem("token", response.data.access_token); //menyimpan auth token
+                this.error_message = response.data.message;
+                this.color = "green";
+                this.snackbar = true;
+                this.load = false;
+                this.$router.push({
+                    name: "unverified",
+                });
+                })
+                .catch((error) => {
+                this.error_message = error.response.data.message;
+                this.color = "red";
+                this.snackbar = true;
+                localStorage.removeItem("token");
+                this.load = false;
+                });
+        // }
+        },   
 	},
 };
 </script>
