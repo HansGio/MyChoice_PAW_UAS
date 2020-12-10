@@ -37,15 +37,15 @@
                 <v-btn text router to="/about"> About </v-btn>
                 <v-btn text router to="/contact-us"> Contact Us </v-btn>
                 <v-btn text router to="/voucher"> Voucher </v-btn>
-                <v-btn text router to="/profile"
-                    ><v-icon>mdi-account</v-icon></v-btn
-                >
-                <v-btn text router to="/shopping-bag"
-                    ><v-icon>mdi-shopping</v-icon></v-btn
-                >
-                <v-btn text router @click="logout"
-                    ><v-icon>mdi-power</v-icon></v-btn
-                >
+                <v-btn text router to="/profile">
+                    <v-icon>mdi-account</v-icon>
+                </v-btn>
+                <v-btn text router to="/shopping-bag">
+                    <v-icon>mdi-shopping</v-icon>
+                </v-btn>
+                <v-btn text router @click="logout">
+                    <v-icon>mdi-power</v-icon>
+                </v-btn>
             </v-toolbar-items>
         </v-app-bar>
         <div class="fullheight pa-5">
@@ -57,11 +57,11 @@
 
         <v-footer>
             <div class="text-center">
-                <v-icon class="ml-5">mdi-account-circle</v-icon
-                ><base-text> Navigation</base-text>
+                <v-icon class="ml-5">mdi-account-circle</v-icon>
+                <base-text> Navigation</base-text>
                 <space class="ml-10"></space>
-                <v-icon>mdi-account-box-outline</v-icon
-                ><base-text> Contact Info</base-text>
+                <v-icon>mdi-account-box-outline</v-icon>
+                <base-text> Contact Info</base-text>
             </div>
 
             <v-container fluid class="pa-0">
