@@ -18,42 +18,80 @@
     <v-container fluid>
        <v-row no-gutters>
         <v-col
-          v-for="n in 2"
-          :key="n"
           cols="12"
-          md="6">
+          md="6"
+          class="pa-2">
           <v-item>
             <v-card
-              class="d-flex align-center"
+              class="d-flex justify-center pa-6"
               height="75"
               @click="man"
+              color="#aee6e6"
             >
+            <h3 class="headline white--text text--accent-2"> Man </h3>
             </v-card>
-            
+          </v-item>
+        </v-col>
+         <v-col
+          cols="12"
+          md="6"
+          class="pa-2"
+          >
+          <v-item>
+            <v-card
+              class="d-flex justify-center pa-6"
+              height="75"
+              @click="woman"
+              color="#fca3cc"
+            >
+            <h3 class="headline white--text text--accent-2"> Woman </h3>
+            </v-card>
           </v-item>
         </v-col>
       </v-row>
     </v-container>
   </v-item-group>
 
+  <v-container fluid>
+    <v-row dense>
+      <v-col
+        v-for="card in cards"
+        :key="card.title"
+        :cols="card.flex">
+        <v-card>
+          <v-img
+            :src="card.src"
+            height="600px">
+            <v-card-title v-text="card.title"></v-card-title>
+          </v-img>
+        </v-card>
+      </v-col>
+    </v-row>
+  </v-container>
 
-    <v-container fluid>
-      <v-row dense>
-        <v-col
-          v-for="card in cards"
-          :key="card.title"
-          :cols="card.flex">
-          <v-card>
-            <v-img
-              :src="card.src"
-              height="470px">
-              <v-card-title v-text="card.title"></v-card-title>
-            </v-img>
-          </v-card>
-        </v-col>
-      </v-row>
-    </v-container>
-  </div>
+  <v-row no-gutters>
+    <v-col>
+      <v-item>
+        <v-card
+          class="d-flex justify-center pa-6"
+          height="75"
+          @click="recommendation"
+          color="#f5b461"
+        >
+        <h3 class="headline white--text text--accent-2"> Weekly Recommendation </h3>
+        </v-card>
+      </v-item>
+    </v-col>
+  </v-row>
+
+  <v-img
+    lazy-src="require('@/assets/carousel-1.jpg')"
+    max-height
+    max-width
+    :src="require('@/assets/carousel-1.jpg')"
+    class="mt-4"
+  ></v-img>
+ </div>
 </template>
 
 <script>
@@ -83,10 +121,13 @@
 
     methods:{
         man(){
-            this.$router.push('')
+            this.$router.push('/man-list-item')
         },
         woman(){
-            this.$router.push('')
+            this.$router.push('/woman-list-item')
+        },
+        recommendation(){
+          this.$router.push('/recommended-item')
         },
     }
   }
