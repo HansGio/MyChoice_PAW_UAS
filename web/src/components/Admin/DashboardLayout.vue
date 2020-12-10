@@ -42,8 +42,9 @@
 			<v-app-bar-nav-icon @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
 			<VSpacer />
 			<v-toolbar-items>
-				<v-btn text router><v-icon>mdi-account</v-icon></v-btn>
-				<v-btn text router><v-icon>mdi-power</v-icon></v-btn>
+				<v-btn text router @click="logout">
+					<v-icon>{{ loggedIn ? "mdi-logout" : "mdi-login" }}</v-icon>
+				</v-btn>
 			</v-toolbar-items>
 		</v-app-bar>
 		<div class="fullheight pa-5">
@@ -73,6 +74,40 @@ export default {
 				{ title: "Voucher", to: "voucher" },
 			],
 		};
+	},
+	methods: {
+		logout() {
+			if (this.loggedIn) {
+				var url = this.$api + "/logout";
+				this.$http
+					.get(url, {
+						headers: {
+							Authorization: "Bearer " + localStorage.getItem("token"),
+						},
+					})
+					.then((response) => {
+						this.error_message = response.data.message;
+						this.color = "green";
+						this.snackbar = true;
+						this.load = false;
+						localStorage.removeItem("id");
+						localStorage.removeItem("token");
+						localStorage.removeItem("email");
+						location.reload();
+					})
+					.catch((error) => {
+						this.error_message = error.response.data.message;
+						this.color = "red";
+						this.snackbar = true;
+						this.load = false;
+					});
+			} else this.$router.push("/login");
+		},
+	},
+	computed: {
+		loggedIn() {
+			return localStorage.getItem("token") != null;
+		},
 	},
 };
 </script>

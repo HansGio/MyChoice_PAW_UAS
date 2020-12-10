@@ -80,15 +80,17 @@ export default {
 					localStorage.setItem("id", response.data.user.id);
 					localStorage.setItem("token", response.data.access_token);
 					localStorage.setItem("email", response.data.user.email);
-					this.$router.replace("/");
-					console.table(response);
 					this.error_message = response.data.message;
 					this.color = "green";
 					this.snackbar = true;
 					this.load = false;
+					if (response.data.user.email == "admin@admin.com") {
+						this.$router.replace("/admin");
+					} else {
+						this.$router.replace("/");
+					}
 					this.clear();
 					this.create = false;
-					this.$router.replace("/");
 				})
 				.catch((e) => {
 					this.error_message = e.response.data.message;
