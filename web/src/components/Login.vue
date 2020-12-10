@@ -13,6 +13,7 @@
 					outlined
 					v-model="email"
 					label="E-mail"
+					type="email"
 					required
 				></v-text-field>
 
@@ -22,6 +23,7 @@
 					v-model="password"
 					label="Password"
 					required
+					type="password"
 				></v-text-field>
 
 
@@ -37,9 +39,15 @@
 
 <script>
 export default {
+	name:"Login",
 	data: () => ({
 		email: "",
 		password:"",
+		load: false,
+		snackbar: false,
+		error_message: "",
+		color: "",
+		valid: false,
 		// select: null,
 		// checkbox: null,
 		dictionary: {
@@ -48,10 +56,8 @@ export default {
 				// custom attributes
 			},
 			custom: {
-				name: {
+				email: {
 					required: () => "Name can not be empty",
-					max: "The name field may not be greater than 10 characters",
-					// custom messages
 				},
 				select: {
 					required: "Select field is required",
@@ -66,6 +72,57 @@ export default {
 	methods: {
 		register(){
 			//  this.$router.push('/register')
+		},
+		submit() {
+			if (this.email == "") {
+				this.$http
+				.post(this.$api + "/login", {
+					email: this.email,
+					password: this.password,
+				})
+				.then((response) => {
+					localStorage.setItem("id", response.data.user.id); //menyimpan id user yang sedang login
+					localStorage.setItem("token", response.data.access_token); //menyimpan auth token
+					this.error_message = response.data.message;
+					this.color = "green";
+					this.snackbar = true;
+					this.load = false;
+					this.$router.push({
+					name: "admin",
+					});
+				})
+				.catch((error) => {
+					this.error_message = error.response.data.message;
+					this.color = "red";
+					this.snackbar = true;
+					localStorage.removeItem("token");
+					this.load = false;
+				});
+			} else {
+				this.$http
+				.post(this.$api + "/login", {
+					email: this.email,
+					password: this.password,
+				})
+				.then((response) => {
+					localStorage.setItem("id", response.data.user.id); //menyimpan id user yang sedang login
+					localStorage.setItem("token", response.data.access_token); //menyimpan auth token
+					this.error_message = response.data.message;
+					this.color = "green";
+					this.snackbar = true;
+					this.load = false;
+					this.$router.push({
+					name: "",
+					});
+				})
+				.catch((error) => {
+					this.error_message = error.response.data.message;
+					this.color = "red";
+					this.snackbar = true;
+					localStorage.removeItem("token");
+					this.load = false;
+				});
+			}
 		},
 	},
 };

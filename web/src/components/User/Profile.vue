@@ -15,13 +15,27 @@
                         md="4"
                     >
                         <v-img
-                            v-model="profilepic"
-                            lazy-src="https://picsum.photos/id/11/10/6"
-                            max-height="150"
-                            max-width="250"
+                            v-model="image64"            
+                            width="250px"
                             src="https://picsum.photos/id/11/500/300"
-                        ></v-img>   
+                            
+                        ></v-img> 
+
+                         <!-- :src="'http://localhost:8000'+user.gambar" -->
+
+                        <div class="container">
+                        <div class="large-12 medium-12 small-12 cell">
+                            <label>File
+                            <input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+                            </label>
+                        </div>
                         
+                        <v-btn color="blue darken-1" text @click="submitFile()">
+                            Upload
+                        </v-btn>
+                        </div>  
+
+
                         </v-col>
                         <v-col
                             cols="12"
@@ -54,11 +68,193 @@
                             label="Address"					
                         ></v-text-field>
 
-                        <v-btn color="primary" @click="edit">Edit Profile</v-btn>
+                        <!-- <v-btn color="primary" @click="edit">Edit Profile</v-btn> -->
 
+
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="blue darken-1" text @click="cancel">
+                            Cancel
+                        </v-btn>
+                        <v-btn color="blue darken-1" text @click="setForm">
+                            Save
+                        </v-btn>
+                        </v-card-actions>
                     </v-col>
                     </v-row>
              </v-container>
 		</v-card>
+
+        
+      <v-snackbar v-model="snackbar" :color="color" timeout="2000" bottom>
+        {{ error_message }}
+      </v-snackbar>
 	</div>
 </template>
+
+<script>
+  export default {
+    name: "User",
+    data() {
+      return {
+        inputType: 'Profile',
+        enabled: false,
+        load: false,
+        snackbar: false,
+        error_message: '',
+        current_password:'',
+        // password:'',
+        // newPass:'',
+        // confPass:'',
+        color: '',
+        search: null,
+        dialog: false,
+        dialogConfirm: false,
+        user: null,
+        deleteId: '',
+        editId: '',
+        temp:0,
+        file:''
+        
+      };
+    },
+    methods: {
+      handleFileUpload(){
+        this.file = this.$refs.file.files[0];
+        this.temp=1;
+      },submitFile(){
+    
+        if(this.temp==0){
+          this.error_message = "Upload image terlebih dahulu!";
+            this.color = "red"
+        }else{
+          let formData = new FormData();
+            formData.append('gambar', this.file);
+            
+            var url = this.$api + '/user/gambar/'+localStorage.getItem('id')
+              this.load = true
+              this.$http.post(url, formData, {
+                headers: {
+                  
+                  'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+              }).then(response => {
+                this.error_message = response.data.message;
+                this.color = "green"
+                this.snackbar = true;
+                this.load = false;
+                this.close();
+                this.readData(); //mengambil data
+                this.resetForm();
+              }).catch(error => {
+                this.error_message = error.response.data.message;
+                this.color = "red"
+                this.snackbar = true;
+                this.load = false;
+              })
+        }
+       
+        
+      },
+      setForm() {
+
+        if(this.enabled==false)
+          this.save()
+        else{
+
+          if(this.newPass!=this.confPass){
+            this.error_message="Password Baru dan Konfirmasi Password berbeda!";
+            this.snackbar=true;
+          }else{
+            this.update()
+            this.save()
+          }
+        }
+       
+          
+      },
+    
+      readData() {
+        var url = this.$api + '/user/'+localStorage.getItem('id')
+        this.$http.get(url, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        }).then(response => {
+          this.user = response.data.data
+        })
+      },
+
+      save() {
+      
+          let newData = {
+          name: this.user.name,
+          email: this.user.email
+          }
+        var url = this.$api + '/user/'+localStorage.getItem('id')
+        this.load = true
+        this.$http.put(url, newData, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        }).then(response => {
+          this.error_message = response.data.message;
+          this.color = "green"
+          this.snackbar = true;
+          this.load = false;
+          this.close();
+          this.readData(); //mengambil data
+          this.resetForm();
+        }).catch(error => {
+          this.error_message = error.response.data.message;
+          this.color = "red"
+          this.snackbar = true;
+          this.load = false;
+        })
+  
+       
+      },
+ 
+      update() {
+        let newData = {
+          current_password: this.current_password,
+          new_password: this.newPass,
+          new_confirm_password:this.confPass
+          }
+        var url = this.$api + '/user/password/'+localStorage.getItem('id')
+        this.load = true
+        this.$http.put(url, newData, {
+          headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+          }
+        }).then(response => {
+          this.error_message = response.data.message;
+          this.color = "green"
+          this.snackbar = true;
+          this.load = false;
+          this.close();
+          this.readData(); //mengambil data
+          this.resetForm();
+      
+        }).catch(error => {
+          this.error_message = error.response.data.message;
+          this.color = "red"
+          this.snackbar = true;
+          this.load = false;
+        })
+      },
+      cancel() {
+        this.$router.push('/dashboard'
+        );
+      },
+    },
+    computed: {
+      formTitle() {
+        return this.inputType
+      },
+    },
+    mounted() {
+      this.readData();
+    },
+  };
+  </script>
