@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<v-card class="mx-auto pa-5 mt-16" elevation="3" outlined max-width="550px">
+		<v-card class="mx-auto pa-5 mt-10" elevation="3" outlined max-width="550px">
 			<v-card-text align="center">
 				<p class="display-1 text--primary">
 					Sign Up
@@ -73,7 +73,7 @@
                 <v-text-field
 					dense
 					outlined
-					v-model="confirmPassword"
+					v-model="confirm_password"
 					label="Confirm Password"
                     type="password"
 					required
@@ -104,7 +104,9 @@ export default {
 		email: "",
 		password:"",
 		address:"",
-        confirmPassword:"",
+		phone:"",
+		image64:"",
+        confirm_password:"",
         load: false,
         snackbar: false,
         error_message: "",
@@ -142,24 +144,26 @@ export default {
 		login(){
 			this.$router.push('/login')
         },
-         submit() {
+        submit() {
             console.log(this.email);
             // if (this.$refs.form.validate()) {
             //cek apakah yg akan dikirim sudah valid
             this.load = true;
             console.log(this.email);
-            console.log(this.password);
             console.log(this.gender);
             console.log(this.name);
             console.log(this.birth_date);
             this.$http
                 .post(this.$api + "/register", {
                 name: this.name,
-                email: this.email,
-                password: this.password,
-                gender: this.gender,
-                birth_date: this.birth_date,
-
+				email: this.email,
+				phone: this.phone,				
+				birth_date: this.birth_date,
+				gender: this.gender,
+				address: this.address,
+				password: this.password,
+				confirm_password: this.confirm_password,
+			
                 })
                 .then((response) => {
                 // localStorage.setItem("id", response.data.user.id); //menyimpan id user yang sedang login
