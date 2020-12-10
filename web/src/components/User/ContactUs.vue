@@ -46,9 +46,8 @@ export default {
 	data: () => ({
 		name: "",
 		email: "",
-		select: null,
-		items: ["Item 1", "Item 2", "Item 3", "Item 4"],
-		checkbox: null,
+		// select: null,
+		// checkbox: null,
 		dictionary: {
 			attributes: {
 				email: "E-mail Address",
@@ -67,13 +66,6 @@ export default {
 		},
 	}),
 	methods: {
-		clear() {
-			this.name = "";
-			this.email = "";
-			this.select = null;
-			this.checkbox = null;
-			this.$validator.reset();
-		},
 	},
 };
 </script>
