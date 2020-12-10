@@ -21,7 +21,8 @@ class AuthController extends Controller
             'gender' => 'required',
             'address' => 'required|max:255',
             'password' => 'required',
-            'confirm_password' => 'required|same:password'
+            'confirm_password' => 'required|same:password',
+            'image64' => 'nullable'
         ]); // membuat rule validasi input
 
         if ($validate->fails())

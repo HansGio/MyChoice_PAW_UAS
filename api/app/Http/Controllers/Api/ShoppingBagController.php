@@ -25,6 +25,22 @@ class ShoppingBagController extends Controller
         ], 404); //return message data shoppingBag kosong
     }
 
+    public function showByUser($userId)
+    {
+        $items = ShoppingBag::where('user_id', $userId)->get();
+
+        if (count($items) > 0) {
+            return response([
+                'message' => 'Retrieve All Success',
+                'shopping_bags' => $items
+            ], 200);
+        } //return data semua shoppingBag dalam bentuk json
+
+        return response([
+            'message' => 'No shopping Bag found',
+        ], 404); //return message data shoppingBag kosong
+    }
+
     public function show($id)
     {
         $shoppingBag = ShoppingBag::find($id); //mencari data shoppingBag berdasarkan id

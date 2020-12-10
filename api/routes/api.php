@@ -29,6 +29,9 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // Item
     Route::get('item', 'Api\ItemController@index');
+    Route::get('item/man', 'Api\ItemController@showMan');
+    Route::get('item/woman', 'Api\ItemController@showWoman');
+    Route::get('item/recommend', 'Api\ItemController@showRecommend');
     Route::get('item/{id}', 'Api\ItemController@show');
     Route::post('item', 'Api\ItemController@store');
     Route::put('item/{id}', 'Api\ItemController@update');
@@ -50,6 +53,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 
     // Shopping Bag
     Route::get('shopping-bag', 'Api\ShoppingBagController@index');
+    Route::get('shopping-bag/user/{id}', 'Api\ShoppingBagController@showByUser');
     Route::get('shopping-bag/{id}', 'Api\ShoppingBagController@show');
     Route::post('shopping-bag', 'Api\ShoppingBagController@store');
     Route::put('shopping-bag/{id}', 'Api\ShoppingBagController@update');

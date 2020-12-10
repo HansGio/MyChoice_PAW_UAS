@@ -25,6 +25,54 @@ class ItemController extends Controller
         ], 404); //return message data item kosong
     }
 
+    public function showMan()
+    {
+        $items = Item::where('gender', 'man')->get();
+
+        if (count($items) > 0) {
+            return response([
+                'message' => 'Retrieve Man Items Success',
+                'items' => $items
+            ], 200);
+        } //return data semua item dalam bentuk json
+
+        return response([
+            'message' => 'No item found',
+        ], 404); //return message data item kosong
+    }
+
+    public function showWoman()
+    {
+        $items = Item::where('gender', 'woman')->get();
+
+        if (count($items) > 0) {
+            return response([
+                'message' => 'Retrieve Woman Items Success',
+                'items' => $items
+            ], 200);
+        } //return data semua item dalam bentuk json
+
+        return response([
+            'message' => 'No item found',
+        ], 404); //return message data item kosong
+    }
+
+    public function showRecommend()
+    {
+        $items = Item::where('active', 1)->take(8)->get();
+
+        if (count($items) > 0) {
+            return response([
+                'message' => 'Retrieve Woman Items Success',
+                'items' => $items
+            ], 200);
+        } //return data semua item dalam bentuk json
+
+        return response([
+            'message' => 'No item found',
+        ], 404); //return message data item kosong
+    }
+
     public function show($id)
     {
         $item = Item::find($id); //mencari data item berdasarkan id
