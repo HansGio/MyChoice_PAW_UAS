@@ -44,24 +44,32 @@
 
                         <v-text-field
                             dense
-                            v-model="name"
+                            v-model="user.name"
                             label="Name"
-                        ></v-text-field>
+                        >
+                         {{ user.name }}
+                        </v-text-field>
+                         
                         <v-text-field
                             dense
-                            v-model="email"
+                            v-model="user.email"
                             label="E-mail"
-                        ></v-text-field>
+                        >{{ user.email }}
+                        </v-text-field>
+
                         <v-text-field
                             dense
-                            v-model="gender"
+                            v-model="user.gender"
                             label="Gender"
-                            ></v-text-field>
+                            >
+                         {{ user.gender }}  
+                        </v-text-field>
                         <v-text-field
                             dense
-                            v-model="birthdate"
+                            v-model="user.birthdate"
                             label="Birthdate"					
-                        ></v-text-field>
+                        >
+                        {{ user.birthdate }} </v-text-field>
                         <v-text-field
                             dense
                             v-model="address"
@@ -97,164 +105,125 @@
     name: "User",
     data() {
       return {
-        inputType: 'Profile',
-        enabled: false,
-        load: false,
-        snackbar: false,
-        error_message: '',
-        current_password:'',
-        // password:'',
-        // newPass:'',
-        // confPass:'',
-        color: '',
-        search: null,
-        dialog: false,
-        dialogConfirm: false,
-        user: null,
-        deleteId: '',
-        editId: '',
-        temp:0,
-        file:''
+         user: {
+                nama: '',
+                email: '',
+                phone: '',
+                role: ''
+            },
+            formProfile: {
+                nama_user: '',
+                email: '',
+                telepon: '',
+                oldPassword: '',
+                newPassword: '',
+            },
+            confirmPassword: '',
+            image: '',
+            profileImg: '',
+            snackbar: false,
+            color: '',
+            error_message: '',
         
       };
     },
     methods: {
-      handleFileUpload(){
-        this.file = this.$refs.file.files[0];
-        this.temp=1;
-      },submitFile(){
-    
-        if(this.temp==0){
-          this.error_message = "Upload image terlebih dahulu!";
-            this.color = "red"
-        }else{
-          let formData = new FormData();
-            formData.append('gambar', this.file);
-            
-            var url = this.$api + '/user/gambar/'+localStorage.getItem('id')
-              this.load = true
-              this.$http.post(url, formData, {
+        loadData() {
+
+            this.profileImg = localStorage.getItem('profileImg') ? this.$api + '/user/image/' + localStorage.getItem('profileImg') :
+                'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png';
+
+            let url = this.$api + '/user';
+            this.$http.get(url, {
                 headers: {
-                  
-                  'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
                 }
-              }).then(response => {
-                this.error_message = response.data.message;
-                this.color = "green"
+            }).then(response => {
+
+                this.user.nama = response.data.user.nama_user.toUpperCase();
+                this.user.email = response.data.user.email;
+                this.user.phone = response.data.user.telepon;
+                this.user.role = response.data.user.role;
+
+                this.formProfile.nama_user = this.user.nama;
+                this.formProfile.email = this.user.email;
+                this.formProfile.telepon = this.user.phone;
+
+                console.table(response);
+            }).catch(e => {
+                this.error_message = e.response.data.message;
+                this.color = "red";
                 this.snackbar = true;
-                this.load = false;
-                this.close();
-                this.readData(); //mengambil data
-                this.resetForm();
-              }).catch(error => {
-                this.error_message = error.response.data.message;
-                this.color = "red"
+            });
+        },
+        save() {
+            let url = this.$api + '/user/' + localStorage.getItem('id');
+
+            if (this.confirmPassword === this.formProfile.newPassword) {
+                this.$http.put(url, this.formProfile, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }).then((response) => {
+                    this.loadData();
+                    this.error_message = response.data.message;
+                    this.color = "green";
+                    this.snackbar = true;
+                }).catch(e => {
+                    this.error_message = e.response.data.message;
+                    this.color = "red";
+                    this.snackbar = true;
+                })
+            } else {
+                this.error_message = "Password Tidak Sesuai";
+                this.color = "red";
                 this.snackbar = true;
-                this.load = false;
-              })
+            }
+        },
+        hapus() {
+            let url = this.$api + '/user/' + localStorage.getItem('id');
+            this.$http.delete(url, {
+                headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token')
+                }
+            }).then(() => {
+                this.$router.replace('/');
+                localStorage.removeItem('id');
+                localStorage.removeItem('token');
+                localStorage.removeItem('profileImg');
+            }).catch(e => {
+                this.error_message = e.response.data.message;
+                this.color = "red";
+                this.snackbar = true;
+            })
+        },
+        onChange(e) {
+            const file = e.target.files[0]
+            this.image = file
+            this.profileImg = URL.createObjectURL(file)
+
+            if (this.image) {
+                let url = this.$api + '/user/image';
+                let dataFile = new FormData();
+
+                dataFile.append('gambar', this.image);
+                dataFile.append('id', localStorage.getItem('id'));
+
+                this.$http.post(url, dataFile, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('token')
+                    }
+                }).then(response => {
+                    localStorage.setItem('profileImg', response.data.user.gambar);
+                    console.log(response);
+                }).catch(e => {
+                    console.log(e);
+                })
+            }
         }
-       
-        
-      },
-      setForm() {
-
-        if(this.enabled==false)
-          this.save()
-        else{
-
-          if(this.newPass!=this.confPass){
-            this.error_message="Password Baru dan Konfirmasi Password berbeda!";
-            this.snackbar=true;
-          }else{
-            this.update()
-            this.save()
-          }
-        }
-       
-          
-      },
-    
-      readData() {
-        var url = this.$api + '/user/'+localStorage.getItem('id')
-        this.$http.get(url, {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-          }
-        }).then(response => {
-          this.user = response.data.data
-        })
-      },
-
-      save() {
-      
-          let newData = {
-          name: this.user.name,
-          email: this.user.email
-          }
-        var url = this.$api + '/user/'+localStorage.getItem('id')
-        this.load = true
-        this.$http.put(url, newData, {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-          }
-        }).then(response => {
-          this.error_message = response.data.message;
-          this.color = "green"
-          this.snackbar = true;
-          this.load = false;
-          this.close();
-          this.readData(); //mengambil data
-          this.resetForm();
-        }).catch(error => {
-          this.error_message = error.response.data.message;
-          this.color = "red"
-          this.snackbar = true;
-          this.load = false;
-        })
-  
-       
-      },
- 
-      update() {
-        let newData = {
-          current_password: this.current_password,
-          new_password: this.newPass,
-          new_confirm_password:this.confPass
-          }
-        var url = this.$api + '/user/password/'+localStorage.getItem('id')
-        this.load = true
-        this.$http.put(url, newData, {
-          headers: {
-            'Authorization': 'Bearer ' + localStorage.getItem('token')
-          }
-        }).then(response => {
-          this.error_message = response.data.message;
-          this.color = "green"
-          this.snackbar = true;
-          this.load = false;
-          this.close();
-          this.readData(); //mengambil data
-          this.resetForm();
-      
-        }).catch(error => {
-          this.error_message = error.response.data.message;
-          this.color = "red"
-          this.snackbar = true;
-          this.load = false;
-        })
-      },
-      cancel() {
-        this.$router.push('/dashboard'
-        );
-      },
-    },
-    computed: {
-      formTitle() {
-        return this.inputType
-      },
     },
     mounted() {
-      this.readData();
-    },
-  };
-  </script>
+        this.loadData();
+    }
+}
+</script>
