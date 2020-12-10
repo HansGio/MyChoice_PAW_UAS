@@ -137,6 +137,14 @@ const router = new VueRouter({
 			component: importComponent("Login"),
 		},
 		{
+			path: "/register",
+			name: "register",
+			meta: { title: "Register" },
+			component: importComponent("Register"),
+		},
+
+
+		{
 			path: "*",
 			redirect: "/",
 		},
