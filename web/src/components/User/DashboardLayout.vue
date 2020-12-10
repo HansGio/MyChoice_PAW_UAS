@@ -34,7 +34,7 @@
 				<v-btn text router to="/contact-us"> Contact Us </v-btn>
 				<v-btn text router to="/voucher"> Voucher </v-btn>
 				<v-btn text router to="/profile"><v-icon>mdi-account</v-icon></v-btn>
-				<v-btn text router to="/checkout"><v-icon>mdi-shopping</v-icon></v-btn>
+				<v-btn text router to="/shopping-bag"><v-icon>mdi-shopping</v-icon></v-btn>
 				<v-btn text router><v-icon>mdi-power</v-icon></v-btn>
 			</v-toolbar-items>
 		</v-app-bar>
@@ -91,7 +91,7 @@ export default {
 				{ title: "About", to: "/about" },
 				{ title: "Contact Us", to: "/contact-us" },
 				{ title: "Voucher", to: "/voucher" },
-				{ title: "CheckOut", to:"/checkout"},
+				{ title: "ShoppingBag", to:"/shopping-bag"},
 			],
 		};
 	},
