@@ -93,7 +93,7 @@ export default {
 						localStorage.removeItem("id");
 						localStorage.removeItem("token");
 						localStorage.removeItem("email");
-						location.reload();
+						// location.reload();
 					})
 					.catch((error) => {
 						this.error_message = error.response.data.message;

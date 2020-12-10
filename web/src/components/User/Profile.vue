@@ -11,7 +11,7 @@
 						<v-img
 							width="250px"
 							:src="
-								image64 !== ''
+								image64 !== null
 									? image64
 									: 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg'
 							"
