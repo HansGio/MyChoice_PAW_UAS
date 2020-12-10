@@ -34,6 +34,7 @@
 				<v-btn text router to="/contact-us"> Contact Us </v-btn>
 				<v-btn text router to="/voucher"> Voucher </v-btn>
 				<v-btn text router to="/profile"><v-icon>mdi-account</v-icon></v-btn>
+				<v-btn text router to="/checkout"><v-icon>mdi-shopping</v-icon></v-btn>
 				<v-btn text router><v-icon>mdi-power</v-icon></v-btn>
 			</v-toolbar-items>
 		</v-app-bar>
@@ -43,6 +44,35 @@
 		<v-snackbar v-model="snackbar" color="red" timeout="2000" bottom>
 			{{ logouts }}
 		</v-snackbar>
+		
+		<v-footer>
+			<div class="text-center">
+				<v-icon class="ml-5">mdi-account-circle</v-icon><base-text> Navigation</base-text>
+				<space class="ml-10"></space>
+				<v-icon>mdi-account-box-outline</v-icon><base-text> Contact Info</base-text>
+			</div>
+
+			<v-container fluid class="pa-0">
+			<v-row>
+				<v-col justify="space-around" class="ml-5">
+					<v-btn text color="primary" router to="/about" >About</v-btn>
+					<base-text class="ml-12">Email : MyChoice.cs@gmail.com </base-text>
+					<br>
+					<v-btn text color="primary" router to="/contact-us" >Help</v-btn>
+					<base-text class="ml-15">WhatsApp : 021-235-5313</base-text>
+					
+				</v-col>
+			</v-row>
+			<v-row >
+				<v-col class="text-center">
+					<base-text class="text-center"> Copyright © 2020 All Right Reserved | MyChoice Team  </base-text>
+				</v-col>
+			</v-row>
+			</v-container>
+			
+			
+				
+		</v-footer>
 	</div>
 </template>
 
@@ -61,6 +91,7 @@ export default {
 				{ title: "About", to: "/about" },
 				{ title: "Contact Us", to: "/contact-us" },
 				{ title: "Voucher", to: "/voucher" },
+				{ title: "CheckOut", to:"/checkout"},
 			],
 		};
 	},
