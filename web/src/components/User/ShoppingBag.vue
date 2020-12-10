@@ -7,52 +7,46 @@
                 max-width="200px"
                 color="#9ad3bc"
             >
-                <h3 class="headline white--text text--accent-2">Shopping Bag</h3>
+                <h3 class="headline white--text text--accent-2">
+                    Shopping Bag
+                </h3>
             </v-card>
             <v-container>
                 <v-row no-gutters>
-
-                    <v-col 
-                        cols="12" md="12"
+                    <v-col
+                        cols="12"
+                        md="12"
                         v-for="product in products"
                         :key="product"
                         class="pa-4"
                     >
                         <v-card>
-                            <v-col
-                                class="hidden-sm-and-down" 
-                                md="6"
-                            >
-                                <v-img :src="product.image64" class="image-size">
-                                    <!-- <v-card-title
-                                        v-text="card.title"
-                                    ></v-card-title> -->
+                            <v-col class="hidden-sm-and-down" md="6">
+                                <v-img
+                                    :src="product.image64"
+                                    class="image-size"
+                                >
                                 </v-img>
                             </v-col>
-
                             <v-col
-                            class="align-content-space-between layout wrap"
-                            cols="12"
-                            md="6">
-                                <v-row
-                                  align="center"
-                                  
-                                >
-                                    <v-col 
-                                        cols="10" md="12" >
+                                class="align-content-space-between layout wrap"
+                                cols="12"
+                                md="6"
+                            >
+                                <v-row align="center">
+                                    <v-col cols="10" md="12">
                                         <v-card-title>
                                             {{ product.name }}
                                         </v-card-title>
                                         <v-card-subtitle>
-                                        <br />
-                                            Ukuran {{ product.size}}
-                                        <br />
-
-                                        <v-spacer></v-spacer>
-                                        <p class="headline">
-                                            Price Tag : {{ product.price }}
-                                        </p>
-                                        <br />
+                                            <br />
+                                            Ukuran {{ product.size }}
+                                            <br />
+                                            <v-spacer></v-spacer>
+                                            <p class="headline">
+                                                Price Tag : {{ product.price }}
+                                            </p>
+                                            <br />
                                         </v-card-subtitle>
                                     </v-col>
                                 </v-row>
