@@ -1,17 +1,27 @@
 <template>
 	<v-main class="list">
 		<v-data-table :headers="headers" :items="orders" :search="search">
-			<template v-slot:[`item.statusPesanan`]>
+			<template v-slot:[`item.statusPesanan`]="{ item }">
 				<div class="pa-4">
-					<v-btn width="90px" elevation="2" color="green" class="mb-2" dark>Kirim</v-btn>
+					<v-btn
+						width="90px"
+						elevation="2"
+						color="green"
+						class="mb-2"
+						dark
+						@click="deliverHandler(item)"
+						>Kirim</v-btn
+					>
 					<br />
-					<v-btn width="90px" elevation="2" color="red" dark>Batal</v-btn>
+					<v-btn width="90px" elevation="2" color="red" dark @click="cancelHandler(item)"
+						>Batal</v-btn
+					>
 				</div>
 			</template>
 
 			<template v-slot:[`item.harga`]="{ item }">
 				<div>
-					<h3 class="font-weight-bold">Rp. {{ getTotal(item) }}</h3>
+					<h5 class="font-weight-bold">Rp. {{ getTotal(item) }}</h5>
 				</div>
 			</template>
 
@@ -47,6 +57,25 @@
 				</div>
 			</template>
 		</v-data-table>
+		<v-dialog v-model="dialogConfirm" persistent max-width="400px">
+			<v-card>
+				<v-card-title>
+					<span class="headline">Warning!</span>
+				</v-card-title>
+				<v-card-text>
+					{{ formTitle }}
+				</v-card-text>
+				<v-card-actions>
+					<v-spacer></v-spacer>
+					<v-btn color="blue darken-1" text @click="dialogConfirm = false">
+						Tidak
+					</v-btn>
+					<v-btn color="blue darken-1" text @click="save()">
+						Ya
+					</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
 	</v-main>
 </template>
 <script>
@@ -60,6 +89,8 @@ export default {
 			search: null,
 			dialog: false,
 			dialogConfirm: false,
+			editedItem: null,
+			status: null,
 			order: new FormData(),
 			orders: [],
 			form: {
@@ -71,12 +102,17 @@ export default {
 			deleteId: "",
 			editId: "",
 			headers: [
+				{
+					text: "No Pesanan",
+					align: "start",
+					sortable: false,
+					value: "id",
+				},
 				{ text: "Informasi Produk", value: "productInfo" },
 				{ text: "Informasi Penerima", value: "userInfo" },
 				{ text: "Total Harga (Rp)", value: "harga" },
 				{ text: "Status", value: "statusPesanan" },
 			],
-			desserts: [],
 		};
 	},
 	methods: {
@@ -87,6 +123,97 @@ export default {
 			});
 
 			return total;
+		},
+		deliverHandler(item) {
+			this.editedItem = item;
+			this.status = "deliver";
+			this.dialogConfirm = true;
+		},
+		cancelHandler(item) {
+			this.editedItem = item;
+			this.status = "cancel";
+			this.dialogConfirm = true;
+		},
+		save() {
+			if (status == "deliver") {
+				this.deliverOrder();
+			} else {
+				this.cancelOrder();
+			}
+		},
+		deliverOrder() {
+			let item = this.editedItem;
+			let newData = {
+				user_id: item.user_id,
+				recipient_address: item.recipient_address,
+				recipient_name: item.recipient_name,
+				recipient_phone: item.recipient_phone,
+				delivery_status: "Terkirim",
+			};
+
+			console.log(newData);
+			var url = this.$api + "/order/" + item.id;
+			this.load = true;
+			this.$http
+				.put(url, newData, {
+					headers: {
+						Authorization: "Bearer " + localStorage.getItem("token"),
+					},
+				})
+				.then((response) => {
+					this.error_message = response.data.message;
+					this.color = "green";
+					this.snackbar = true;
+					this.load = false;
+					this.close();
+					this.readData(); //mengambil data
+					this.resetForm();
+				})
+				.catch((error) => {
+					this.error_message = error.response.data.message;
+					console.log(this.error_message);
+					this.color = "red";
+					this.snackbar = true;
+					this.load = false;
+				});
+			this.dialogConfirm = false;
+		},
+		cancelOrder() {
+			let item = this.editedItem;
+			let newData = {
+				user_id: item.user_id,
+				recipient_address: item.recipient_address,
+				recipient_name: item.recipient_name,
+				recipient_phone: item.recipient_phone,
+				delivery_status: "Dibatalkan",
+			};
+
+			console.log(newData);
+			var url = this.$api + "/order/" + item.id;
+			this.load = true;
+			this.$http
+				.put(url, newData, {
+					headers: {
+						Authorization: "Bearer " + localStorage.getItem("token"),
+					},
+				})
+				.then((response) => {
+					this.error_message = response.data.message;
+					this.color = "green";
+					this.snackbar = true;
+					this.load = false;
+					this.close();
+					this.readData(); //mengambil data
+					this.resetForm();
+				})
+				.catch((error) => {
+					this.error_message = error.response.data.message;
+					console.log(this.error_message);
+					this.color = "red";
+					this.snackbar = true;
+					this.load = false;
+				});
+			this.dialogConfirm = false;
 		},
 		readData() {
 			var url = this.$api + "/order";
@@ -99,6 +226,10 @@ export default {
 				.then((response) => {
 					console.log(response);
 					this.orders = response.data.items;
+					this.orders = this.orders.filter(
+						(e) =>
+							e.delivery_status !== "Terkirim" && e.delivery_status !== "Dibatalkan"
+					);
 				});
 		},
 		close() {
@@ -106,6 +237,13 @@ export default {
 		},
 		cancel() {
 			this.dialog = false;
+		},
+	},
+	computed: {
+		formTitle() {
+			return this.status == "deliver"
+				? "Apakah anda yakin ingin mengirim order ini?"
+				: "Apakah anda yakin ingin membatalkan order ini?";
 		},
 	},
 	mounted() {
