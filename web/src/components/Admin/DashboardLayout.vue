@@ -77,7 +77,6 @@ export default {
             dialogConfirm: false,
             dialog: false,
             logouts: "LogOut Success",
-
             items: [
                 { title: "Dashboard", to: "dashboard" },
                 { title: "Daftar Produk", to: "daftar-produk" },
