@@ -47,6 +47,18 @@ export default {
 		};
 	},
 	methods: {
+		readData() {
+			var url = this.$api + "/voucher";
+			this.$http
+				.get(url, {
+					headers: {
+						Authorization: "Bearer " + localStorage.getItem("token"),
+					},
+				})
+				.then((response) => {
+					this.vouchers = response.data.vouchers;
+				});
+		},
 		close() {
 			this.dialog = false;
 		},
@@ -57,6 +69,9 @@ export default {
 			if (status == "aktif") return "green";
 			else return "red";
 		},
+	},
+	mounted() {
+		this.readData();
 	},
 };
 </script>
