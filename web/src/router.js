@@ -146,19 +146,19 @@ const router = new VueRouter({
 router.beforeEach((to, from, next) => {
 	document.title = to.meta.title;
 
-	// // Kalau belum login redirect ke view login
-	// if (to.matched.some((record) => record.meta.requiresAuth)) {
-	// 	if (/* diganti kondisi belum login */) {
-	// 		next({ name: "login" });
-	// 	}
-	// }
+	// Kalau belum login redirect ke view login
+	if (to.matched.some((record) => record.meta.requiresAuth)) {
+		if (!localStorage.getItem("token")) {
+			next({ name: "login" });
+		}
+	}
 
-	// // Kalau bukan admin redirect ke view home
-	// else if (to.matched.some((record) => record.meta.adminArea)) {
-	// 	if (/* diganti kondisi bukan admin */) {
-	// 		next({ name: "home" });
-	// 	}
-	// }
+	// Kalau bukan admin redirect ke view home
+	else if (to.matched.some((record) => record.meta.adminArea)) {
+		if (localStorage.getItem("email") !== "admin@admin.com") {
+			next({ name: "home" });
+		}
+	}
 
 	next();
 });
