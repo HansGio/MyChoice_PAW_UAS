@@ -43,7 +43,9 @@
                 <v-btn text router to="/shopping-bag"
                     ><v-icon>mdi-shopping</v-icon></v-btn
                 >
-                <v-btn text router><v-icon>mdi-power</v-icon></v-btn>
+                <v-btn text router @click="logout"
+                    ><v-icon>mdi-power</v-icon></v-btn
+                >
             </v-toolbar-items>
         </v-app-bar>
         <div class="fullheight pa-5">
@@ -89,6 +91,9 @@
                 </v-row>
             </v-container>
         </v-footer>
+        <v-snackbar v-model="snackbar" :color="color" timeout="2000" bottom>
+            {{ error_message }}
+        </v-snackbar>
     </div>
 </template>
 
@@ -112,7 +117,39 @@ export default {
         };
     },
 
-    methods: {},
+    methods: {
+        logout() {
+            var url = this.$api + "/logout";
+            this.$http
+                .get(url, {
+                    headers: {
+                        Authorization:
+                            "Bearer " + localStorage.getItem("token"),
+                    },
+                })
+                .then((response) => {
+                    this.error_message = response.data.message;
+                    this.color = "green";
+                    this.snackbar = true;
+                    this.load = false;
+                    localStorage.removeItem("id");
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("name");
+                    localStorage.removeItem("email");
+                    localStorage.removeItem("address");
+                    localStorage.removeItem("birth_date");
+                    localStorage.removeItem("gender");
+                    localStorage.removeItem("profileImg");
+                    localStorage.removeItem("phone");
+                })
+                .catch((error) => {
+                    this.error_message = error.response.data.message;
+                    this.color = "red";
+                    this.snackbar = true;
+                    this.load = false;
+                });
+        },
+    },
 };
 </script>
 
