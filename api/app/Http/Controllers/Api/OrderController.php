@@ -15,6 +15,12 @@ class OrderController extends Controller
         $items = Order::all();
 
         if (count($items) > 0) {
+
+            foreach ($items as $item) {
+                $orderDetails = OrderDetail::where('order_id', $item->id)->get();
+                $item->order_details = $orderDetails;
+            }
+
             return response([
                 'message' => 'Retrieve All Success',
                 'items' => $items

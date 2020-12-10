@@ -252,10 +252,10 @@
 		<v-dialog v-model="dialogConfirm" persistent max-width="400px">
 			<v-card>
 				<v-card-title>
-					<span class="headline">warning!</span>
+					<span class="headline">Warning!</span>
 				</v-card-title>
 				<v-card-text>
-					Anda yakin ingin menghapus produk ini?
+					Apakah anda yakin ingin menghapus produk ini?
 				</v-card-text>
 				<v-card-actions>
 					<v-spacer></v-spacer>
