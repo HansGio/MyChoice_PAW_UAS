@@ -37,24 +37,18 @@
                     <v-col cols="12" md="8">
                         <v-text-field
                             dense
-                            v-model="user.name"
+                            v-model="name"
                             label="Name"
-                        >
-                         {{ user.name }}
-                        </v-text-field>
-                         
+                        ></v-text-field>
                         <v-text-field
                             dense
-                            v-model="user.email"
+                            v-model="email"
                             label="E-mail"
-                        >{{ user.email }}
-                        </v-text-field>
-
+                        ></v-text-field>
                         <v-text-field
                             dense
-                            v-model="user.gender"
+                            v-model="gender"
                             label="Gender"
-<<<<<<< HEAD
                         ></v-text-field>
                         <v-text-field
                             dense
@@ -66,17 +60,6 @@
                             v-model="birthdate"
                             label="Birthdate"
                         ></v-text-field>
-=======
-                            >
-                         {{ user.gender }}  
-                        </v-text-field>
-                        <v-text-field
-                            dense
-                            v-model="user.birthdate"
-                            label="Birthdate"					
-                        >
-                        {{ user.birthdate }} </v-text-field>
->>>>>>> 7ce353bb79694b002cfb83973d6bfa7c1c616f0f
                         <v-text-field
                             dense
                             v-model="address"
@@ -110,7 +93,6 @@
 export default {
     name: "User",
     data() {
-<<<<<<< HEAD
         return {
             inputType: "Profile",
             enabled: false,
@@ -328,128 +310,3 @@ export default {
     },
 };
 </script>
-=======
-      return {
-         user: {
-                nama: '',
-                email: '',
-                phone: '',
-                role: ''
-            },
-            formProfile: {
-                nama_user: '',
-                email: '',
-                telepon: '',
-                oldPassword: '',
-                newPassword: '',
-            },
-            confirmPassword: '',
-            image: '',
-            profileImg: '',
-            snackbar: false,
-            color: '',
-            error_message: '',
-        
-      };
-    },
-    methods: {
-        loadData() {
-
-            this.profileImg = localStorage.getItem('profileImg') ? this.$api + '/user/image/' + localStorage.getItem('profileImg') :
-                'https://cdn1.iconfinder.com/data/icons/user-pictures/100/unknown-512.png';
-
-            let url = this.$api + '/user';
-            this.$http.get(url, {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            }).then(response => {
-
-                this.user.nama = response.data.user.nama_user.toUpperCase();
-                this.user.email = response.data.user.email;
-                this.user.phone = response.data.user.telepon;
-                this.user.role = response.data.user.role;
-
-                this.formProfile.nama_user = this.user.nama;
-                this.formProfile.email = this.user.email;
-                this.formProfile.telepon = this.user.phone;
-
-                console.table(response);
-            }).catch(e => {
-                this.error_message = e.response.data.message;
-                this.color = "red";
-                this.snackbar = true;
-            });
-        },
-        save() {
-            let url = this.$api + '/user/' + localStorage.getItem('id');
-
-            if (this.confirmPassword === this.formProfile.newPassword) {
-                this.$http.put(url, this.formProfile, {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }
-                }).then((response) => {
-                    this.loadData();
-                    this.error_message = response.data.message;
-                    this.color = "green";
-                    this.snackbar = true;
-                }).catch(e => {
-                    this.error_message = e.response.data.message;
-                    this.color = "red";
-                    this.snackbar = true;
-                })
-            } else {
-                this.error_message = "Password Tidak Sesuai";
-                this.color = "red";
-                this.snackbar = true;
-            }
-        },
-        hapus() {
-            let url = this.$api + '/user/' + localStorage.getItem('id');
-            this.$http.delete(url, {
-                headers: {
-                    'Authorization': 'Bearer ' + localStorage.getItem('token')
-                }
-            }).then(() => {
-                this.$router.replace('/');
-                localStorage.removeItem('id');
-                localStorage.removeItem('token');
-                localStorage.removeItem('profileImg');
-            }).catch(e => {
-                this.error_message = e.response.data.message;
-                this.color = "red";
-                this.snackbar = true;
-            })
-        },
-        onChange(e) {
-            const file = e.target.files[0]
-            this.image = file
-            this.profileImg = URL.createObjectURL(file)
-
-            if (this.image) {
-                let url = this.$api + '/user/image';
-                let dataFile = new FormData();
-
-                dataFile.append('gambar', this.image);
-                dataFile.append('id', localStorage.getItem('id'));
-
-                this.$http.post(url, dataFile, {
-                    headers: {
-                        'Authorization': 'Bearer ' + localStorage.getItem('token')
-                    }
-                }).then(response => {
-                    localStorage.setItem('profileImg', response.data.user.gambar);
-                    console.log(response);
-                }).catch(e => {
-                    console.log(e);
-                })
-            }
-        }
-    },
-    mounted() {
-        this.loadData();
-    }
-}
-</script>
->>>>>>> 7ce353bb79694b002cfb83973d6bfa7c1c616f0f
