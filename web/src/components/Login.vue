@@ -79,7 +79,10 @@ export default {
                     localStorage.setItem("gender", response.data.user.gender);
                     localStorage.setItem("address", response.data.user.address);
                     localStorage.setItem("image64", response.data.user.image64);
-                    localStorage.setItem("phone", response.data.user.phone);
+                    localStorage.setItem(
+                        "password",
+                        response.data.user.password
+                    );
                     this.$router.replace("/");
                     console.table(response);
                 })
