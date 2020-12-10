@@ -105,12 +105,6 @@ const router = new VueRouter({
 					component: importComponent("Admin/DaftarProduk"),
 				},
 				{
-					path: "tambah-produk",
-					name: "Tambah Produk",
-					meta: { title: "Tambah Produk" },
-					component: importComponent("Admin/TambahProduk"),
-				},
-				{
 					path: "daftar-pesanan",
 					name: "daftarPesanan",
 					meta: { title: "Daftar Pesanan" },
@@ -136,6 +130,13 @@ const router = new VueRouter({
 			meta: { title: "Login" },
 			component: importComponent("Login"),
 		},
+		{
+			path: "/register",
+			name: "register",
+			meta: { title: "Register" },
+			component: importComponent("Register"),
+		},
+
 		{
 			path: "*",
 			redirect: "/",

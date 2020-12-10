@@ -27,7 +27,7 @@ class ItemController extends Controller
 
     public function showMan()
     {
-        $items = Item::where('gender', 'man')->get();
+        $items = Item::where('active', 1)->where('gender', 'man')->get();
 
         if (count($items) > 0) {
             return response([
@@ -43,7 +43,7 @@ class ItemController extends Controller
 
     public function showWoman()
     {
-        $items = Item::where('gender', 'woman')->get();
+        $items = Item::where('active', 1)->where('gender', 'woman')->get();
 
         if (count($items) > 0) {
             return response([

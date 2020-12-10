@@ -71,9 +71,10 @@ export default {
 
 	methods: {
 		register(){
-			//  this.$router.push('/register')
+			this.$router.push('/register')
 		},
 		submit() {
+			// if email admin, ke route admin
 			if (this.email == "") {
 				this.$http
 				.post(this.$api + "/login", {
