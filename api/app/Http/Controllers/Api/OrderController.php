@@ -52,7 +52,6 @@ class OrderController extends Controller
             'recipient_address' => 'required',
             'recipient_name' => 'required',
             'recipient_phone' => 'required|digits_between:10,13',
-            'order_date' => 'required|date',
             'delivery_status' => 'required',
         ]);
 
@@ -105,7 +104,6 @@ class OrderController extends Controller
             'recipient_address' => 'required',
             'recipient_name' => 'required',
             'recipient_phone' => 'required|digits_between:10,13',
-            'order_date' => 'required|date',
             'delivery_status' => 'required',
         ]);
 
@@ -116,7 +114,6 @@ class OrderController extends Controller
         $order->recipient_address = $updateData['recipient_address'];
         $order->recipient_name = $updateData['recipient_name'];
         $order->recipient_phone = $updateData['recipient_phone'];
-        $order->order_date = $updateData['order_date'];
         $order->delivery_status = $updateData['delivery_status'];
 
         if ($order->save()) {

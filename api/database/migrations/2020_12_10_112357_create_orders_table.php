@@ -19,7 +19,6 @@ class CreateOrdersTable extends Migration
             $table->string("recipient_address");
             $table->string("recipient_name");
             $table->string("recipient_phone");
-            $table->date("order_date");
             $table->string("delivery_status");
             $table->timestamps();
         });

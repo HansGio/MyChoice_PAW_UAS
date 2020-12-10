@@ -8,7 +8,7 @@ use Carbon\Carbon;
 class Order extends Model
 {
     protected $fillable = [
-        'user_id', 'recipient_address', 'recipient_name', 'recipient_phone', 'order_date', 'delivery_status'
+        'user_id', 'recipient_address', 'recipient_name', 'recipient_phone', 'delivery_status'
     ];
 
     public function getCreatedAtAttribute()
