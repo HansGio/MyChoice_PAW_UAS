@@ -28,7 +28,7 @@
 				@click="$router.push('/home')"
 			/>
 
-			<VSpacer />
+			<v-spacer></v-spacer>
 			<v-toolbar-items>
 				<v-btn text router to="/about"> About </v-btn>
 				<v-btn text router to="/contact-us"> Contact Us </v-btn>
