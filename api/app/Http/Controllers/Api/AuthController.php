@@ -138,7 +138,6 @@ class AuthController extends Controller
         $user->gender = $data['gender'];
         $user->address = $data['address'];
 
-
         if ($user->save())
             return response([
                 'message' => 'Update Success',

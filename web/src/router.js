@@ -136,7 +136,6 @@ const router = new VueRouter({
 			meta: { title: "Register" },
 			component: importComponent("Register"),
 		},
-
 		{
 			path: "*",
 			redirect: "/",
