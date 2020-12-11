@@ -6,9 +6,23 @@
 			</v-card>
 			<v-container>
 				<v-row no-gutters>
-					<v-col v-for="product in products" :key="product" class="pa-4">
+					<v-col
+						cols="12"
+						md="3"
+						sm="6"
+						v-for="product in products"
+						:key="product"
+						class="pa-4"
+					>
 						<v-card>
-							<v-img :src="product.image64">
+							<v-img
+								height="200"
+								:src="
+									product.image64
+										? product.image64
+										: 'https://www.generationsforpeace.org/wp-content/uploads/2018/03/empty.jpg'
+								"
+							>
 								<!-- <v-card-title
                                     v-text="card.title"
                                 ></v-card-title> -->
@@ -17,16 +31,17 @@
 								{{ product.name }}
 							</v-card-title>
 							<v-card-subtitle>
-								Size S {{ product.stock_s }}
-								<br />
-								Size M {{ product.stock_m }}
-								<br />
-								Size L {{ product.stock_l }}
-								<br />
-								Size XL {{ product.stock_xl }}
+								{{ getSizes(product) }}
 								<br />
 								<v-spacer></v-spacer>
-								<p class="headline">Price Tag : {{ product.price }}</p>
+								<p class="headline">
+									Rp.
+									{{
+										product.price
+											.toString()
+											.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+									}}
+								</p>
 								<br />
 								Desc : {{ product.description }}
 							</v-card-subtitle>
@@ -85,6 +100,15 @@ export default {
 				.then((response) => {
 					this.products = response.data.items;
 				});
+		},
+		getSizes(item) {
+			let sizes = [];
+			if (item.stock_s) sizes.push("S");
+			if (item.stock_m) sizes.push("M");
+			if (item.stock_l) sizes.push("L");
+			if (item.stock_xl) sizes.push("XL");
+
+			return sizes.join("/");
 		},
 	},
 	mounted() {

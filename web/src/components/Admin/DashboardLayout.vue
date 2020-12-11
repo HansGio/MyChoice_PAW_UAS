@@ -50,7 +50,7 @@
 		<div class="fullheight pa-5">
 			<router-view></router-view>
 		</div>
-		<v-snackbar v-model="snackbar" color="red" timeout="2000" bottom>
+		<v-snackbar v-model="snackbar" color="green" timeout="2000" bottom>
 			{{ logouts }}
 		</v-snackbar>
 	</div>
@@ -65,7 +65,7 @@ export default {
 			snackbar: false,
 			dialogConfirm: false,
 			dialog: false,
-			logouts: "LogOut Success",
+			logouts: "Log out success",
 			items: [
 				{ title: "Dashboard", to: "dashboard" },
 				{ title: "Daftar Produk", to: "daftar-produk" },
@@ -93,7 +93,7 @@ export default {
 						localStorage.removeItem("id");
 						localStorage.removeItem("token");
 						localStorage.removeItem("email");
-						// location.reload();
+						location.reload();
 					})
 					.catch((error) => {
 						this.error_message = error.response.data.message;

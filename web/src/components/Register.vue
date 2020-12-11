@@ -168,9 +168,9 @@ export default {
 					this.color = "green";
 					this.snackbar = true;
 					this.load = false;
+					this.login();
 					this.clear();
 					this.create = false;
-					this.login();
 				})
 				.catch((error) => {
 					this.error_message = error.response.data.message;
